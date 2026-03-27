@@ -1,0 +1,47 @@
+# ── SwasthyaSetu AI/ML Service Dependencies ──
+
+# Core Framework
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+
+# AI / ML Models
+openai-whisper>=20231117
+transformers>=4.36.0
+torch>=2.1.0
+easyocr>=1.7.1
+pytesseract>=0.3.10
+opencv-python>=4.8.0
+
+# ML & Data Science
+xgboost>=2.0.0
+lightgbm>=4.1.0
+shap>=0.43.0
+scikit-learn>=1.3.0
+pandas>=2.1.0
+numpy>=1.26.0
+
+# QR Code
+qrcode[pil]>=7.4.2
+
+# Database
+motor>=3.3.2
+pymongo>=4.6.0
+redis>=5.0.1
+
+# Task Queue
+celery>=5.3.4
+
+# Storage
+boto3>=1.29.0
+
+# Auth
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+
+# Geospatial
+geopandas>=0.14.0
+geopy>=2.4.0
+
+# Notifications
+twilio>=8.10.0

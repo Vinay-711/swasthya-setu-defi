@@ -1,0 +1,24 @@
+# ── SwasthyaSetu Document Service Dependencies ──
+
+# Core Framework
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+
+# OCR / Document AI
+easyocr>=1.7.1
+pytesseract>=0.3.10
+opencv-python>=4.8.0
+transformers>=4.36.0
+torch>=2.1.0
+
+# Database
+motor>=3.3.2
+pymongo>=4.6.0
+
+# Storage
+boto3>=1.29.0
+
+# Auth
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4

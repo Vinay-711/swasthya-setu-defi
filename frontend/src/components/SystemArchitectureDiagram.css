@@ -1,0 +1,332 @@
+/* ── System Architecture Diagram ── */
+
+.arch-diagram {
+  --blue: #2563eb;
+  --blue-light: #eff6ff;
+  --purple: #7c3aed;
+  --purple-light: #f5f3ff;
+  --green: #16a34a;
+  --green-light: #f0fdf4;
+  --amber: #d97706;
+  --amber-light: #fffbeb;
+  --teal: #0d9488;
+  --teal-light: #f0fdfa;
+  --pink: #db2777;
+  --pink-light: #fdf2f8;
+  --sky: #0284c7;
+  --sky-light: #f0f9ff;
+
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 20px;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.arch-diagram__title {
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.arch-diagram__subtitle {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #64748b;
+  margin-bottom: 36px;
+}
+
+/* ── 4-Column Table ── */
+
+.arch-columns {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.arch-col {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+  opacity: 0;
+  transform: translateY(40px);
+  animation: arch-slide-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.arch-col:nth-child(1) { animation-delay: 0.08s; }
+.arch-col:nth-child(2) { animation-delay: 0.18s; }
+.arch-col:nth-child(3) { animation-delay: 0.28s; }
+.arch-col:nth-child(4) { animation-delay: 0.38s; }
+
+@keyframes arch-slide-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Column Header ── */
+
+.arch-col__header {
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+}
+
+.arch-col__header--blue   { background: var(--blue); }
+.arch-col__header--purple { background: var(--purple); }
+.arch-col__header--green  { background: var(--green); }
+
+.arch-col__header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+/* ── Column Body ── */
+
+.arch-col__body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ── Cell Card ── */
+
+.arch-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fff;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.arch-cell:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  transform: translateY(-1px);
+}
+
+.arch-cell__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.arch-cell__icon--blue   { background: var(--blue-light);  color: var(--blue); }
+.arch-cell__icon--purple { background: var(--purple-light); color: var(--purple); }
+.arch-cell__icon--green  { background: var(--green-light);  color: var(--green); }
+
+.arch-cell__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.arch-cell__name {
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: #1e293b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.arch-cell__desc {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  margin-top: 1px;
+}
+
+/* ── Feature List (API Gateway) ── */
+
+.arch-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.arch-features li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #475569;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--purple-light);
+}
+
+.arch-features li svg {
+  flex-shrink: 0;
+  color: var(--purple);
+}
+
+/* ── Mini Grid (Microservices / Data Layer) ── */
+
+.arch-mini-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.arch-mini-grid--2x3 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.arch-mini-grid--2x2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.arch-mini-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 12px 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fff;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.arch-mini-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  transform: translateY(-1px);
+}
+
+.arch-mini-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.arch-mini-card__icon--purple { background: var(--purple-light); color: var(--purple); }
+.arch-mini-card__icon--green  { background: var(--green-light);  color: var(--green); }
+
+.arch-mini-card__name {
+  font-weight: 600;
+  font-size: 0.72rem;
+  color: #1e293b;
+  line-height: 1.2;
+}
+
+.arch-mini-card__tech {
+  font-size: 0.65rem;
+  color: #94a3b8;
+}
+
+/* ── Bottom Layer ── */
+
+.arch-bottom {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.arch-bottom-card {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: arch-slide-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.arch-bottom-card:nth-child(1) { animation-delay: 0.5s; }
+.arch-bottom-card:nth-child(2) { animation-delay: 0.6s; }
+.arch-bottom-card:nth-child(3) { animation-delay: 0.7s; }
+.arch-bottom-card:nth-child(4) { animation-delay: 0.8s; }
+
+.arch-bottom-card__header {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.arch-bottom-card__header--amber { background: var(--amber); }
+.arch-bottom-card__header--teal  { background: var(--teal); }
+.arch-bottom-card__header--pink  { background: var(--pink); }
+.arch-bottom-card__header--sky   { background: var(--sky); }
+
+.arch-bottom-card__header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+.arch-bottom-card__body {
+  padding: 14px 16px;
+  font-size: 0.8rem;
+  color: #475569;
+  line-height: 1.6;
+}
+
+/* ── Connector Arrows Row ── */
+
+.arch-connectors {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+  padding: 12px 0;
+  color: #cbd5e1;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 900px) {
+  .arch-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .arch-bottom {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .arch-columns {
+    grid-template-columns: 1fr;
+  }
+  .arch-bottom {
+    grid-template-columns: 1fr;
+  }
+}

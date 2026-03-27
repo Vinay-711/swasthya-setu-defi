@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SwasthyaSetu</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --green:#1a9e5c;--green-light:#e8f7ef;--green-dark:#0f6b3c;
+  --orange:#e8620f;--orange-light:#fdf0e8;--orange-dark:#c04d08;
+  --blue:#1d6ae8;--blue-light:#e8f0fd;--blue-dark:#1450b8;
+  --purple:#7c2de8;--purple-light:#f0e8fd;--purple-dark:#5c1fbe;
+  --red:#e01c1c;--red-light:#fde8e8;
+  --amber:#d97706;--amber-light:#fef3c7;
+  --nav:#0f1923;--nav2:#1a2635;
+  --bg:#f4f6f9;--white:#ffffff;
+  --text:#111827;--text2:#6b7280;--text3:#9ca3af;
+  --border:#e5e7eb;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+h1,h2,h3,.heading{font-family:'Plus Jakarta Sans',sans-serif}
+
+/* NAV */
+nav{background:var(--nav);padding:0 28px;display:flex;align-items:center;height:60px;gap:0;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,0.3)}
+.nav-brand{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:18px;color:#fff;margin-right:32px;letter-spacing:-0.3px}
+.nav-brand span{color:var(--green)}
+.nav-links{display:flex;gap:2px;flex:1}
+.nav-link{padding:8px 16px;color:rgba(255,255,255,0.6);font-size:13.5px;font-weight:500;cursor:pointer;border-radius:8px;transition:all .15s;border:none;background:none;white-space:nowrap}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,0.08)}
+.nav-link.active{color:#fff;background:rgba(255,255,255,0.12)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.mock-badge{padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.3px;border:none;background:#16a34a;color:#fff;transition:all .15s}
+.mock-badge.off{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.5)}
+.lang-btn{padding:5px 12px;border-radius:8px;font-size:12px;font-weight:600;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);border:0.5px solid rgba(255,255,255,0.15);cursor:pointer}
+.logout-btn{padding:5px 14px;border-radius:8px;font-size:12px;font-weight:600;background:transparent;color:rgba(255,255,255,0.5);border:0.5px solid rgba(255,255,255,0.15);cursor:pointer}
+
+/* PAGE */
+.page{display:none;padding:28px 28px 40px;max-width:1300px;margin:0 auto}
+.page.active{display:block}
+
+/* PAGE HEADER */
+.page-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);margin-bottom:6px}
+.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;color:var(--text);margin-bottom:24px;letter-spacing:-0.5px}
+
+/* CARDS */
+.card{background:var(--white);border-radius:14px;border:0.5px solid var(--border);padding:20px 22px}
+.card-sm{background:var(--white);border-radius:12px;border:0.5px solid var(--border);padding:16px 18px}
+
+/* PORTAL BADGE — matching slide style */
+.portal-badge{display:inline-flex;align-items:center;justify-content:center;padding:6px 20px;border-radius:20px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1px;margin-bottom:18px}
+.pb-green{background:var(--green);color:#fff}
+.pb-orange{background:var(--orange);color:#fff}
+.pb-blue{background:var(--blue);color:#fff}
+.pb-purple{background:var(--purple);color:#fff}
+
+/* STAGE BOXES — matching process flow slide */
+.flow-stage{border-radius:12px;padding:0;overflow:hidden;flex:1}
+.stage-header{padding:14px 16px;text-align:center}
+.stage-header .stage-label{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;opacity:.85;margin-bottom:3px}
+.stage-header .stage-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;color:#fff}
+.stage-body{background:var(--white);padding:14px 12px}
+.stage-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 6px;border-radius:8px}
+.stage-item:hover{background:#f9fafb}
+.stage-icon{font-size:20px}
+.stage-item-label{font-size:12px;font-weight:500;color:var(--text2);text-align:center}
+
+/* STAT CARDS */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat-card{background:var(--white);border-radius:12px;border:0.5px solid var(--border);padding:16px 18px}
+.stat-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;letter-spacing:-1px;margin-bottom:2px}
+.stat-label{font-size:12px;color:var(--text2);font-weight:500}
+.stat-sub{font-size:11px;color:var(--text3);margin-top:6px}
+
+/* RISK */
+.risk-card{border-radius:16px;padding:28px 28px;color:#fff;transition:background .4s}
+.risk-pct{font-family:'Plus Jakarta Sans',sans-serif;font-size:64px;font-weight:800;letter-spacing:-3px;line-height:1}
+.risk-label{font-size:13px;opacity:.85;margin-bottom:8px}
+.risk-level{font-size:17px;font-weight:700;margin-top:10px}
+.risk-disease{font-size:14px;opacity:.9;margin-top:4px}
+.shap-bar-track{height:7px;border-radius:4px;background:rgba(255,255,255,0.2);overflow:hidden;margin-top:6px}
+.shap-bar-fill{height:100%;border-radius:4px;background:rgba(255,255,255,0.8);transition:width .8s ease}
+
+/* FORM ELEMENTS */
+.form-group{margin-bottom:16px}
+.form-label{font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block}
+input[type=text],input[type=number],select{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);background:var(--white);outline:none;transition:border .15s}
+input[type=text]:focus,input[type=number]:focus,select:focus{border-color:var(--blue)}
+input[type=range]{width:100%;accent-color:var(--green)}
+
+.checkbox-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.cb-item{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;font-size:13px;background:var(--white);transition:all .15s;user-select:none}
+.cb-item.checked{border-color:var(--green);background:var(--green-light);color:var(--green-dark);font-weight:600}
+.cb-item input{display:none}
+
+.btn-primary{width:100%;padding:12px;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;cursor:pointer;border:none;color:#fff;background:linear-gradient(135deg,var(--green),var(--green-dark));letter-spacing:.2px;transition:opacity .15s;margin-top:8px}
+.btn-primary:hover{opacity:.9}
+.btn-blue{background:linear-gradient(135deg,var(--blue),var(--blue-dark))}
+.btn-orange{background:linear-gradient(135deg,var(--orange),var(--orange-dark))}
+.btn-purple{background:linear-gradient(135deg,var(--purple),var(--purple-dark))}
+
+/* TIMELINE */
+.timeline-entry{display:flex;gap:12px;padding:12px 14px;background:#f9fafb;border-radius:10px;border-left:3px solid var(--green);margin-bottom:10px}
+.timeline-entry.migration{border-left-color:var(--orange)}
+.timeline-entry.update{border-left-color:var(--blue)}
+.tl-city{font-weight:700;font-size:14px}
+.tl-time{font-size:11px;color:var(--text3);margin-top:2px}
+.tl-badge{font-size:10px;padding:2px 8px;border-radius:6px;font-weight:700;align-self:flex-start;white-space:nowrap;margin-top:2px}
+.tl-b-origin{background:var(--green-light);color:var(--green-dark)}
+.tl-b-migration{background:var(--orange-light);color:var(--orange-dark)}
+.tl-b-update{background:var(--blue-light);color:var(--blue-dark)}
+
+/* PORTAL CARDS — slide 6 style */
+.portal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.portal-card{background:var(--white);border-radius:14px;border:0.5px solid var(--border);padding:20px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.portal-card .p-icon{font-size:32px;margin-bottom:6px}
+.portal-card .p-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;margin-bottom:4px}
+.portal-card .p-sub{font-size:12px;color:var(--text2)}
+
+/* TECH GRID */
+.tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.tech-card{background:var(--white);border-radius:12px;border:0.5px solid var(--border);overflow:hidden}
+.tech-card-head{padding:12px 16px;display:flex;align-items:center;gap:10px}
+.tech-card-head .t-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.tech-card-head .t-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px}
+.tech-item{padding:10px 16px;border-top:0.5px solid var(--border)}
+.tech-item-label{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:2px}
+.tech-item-val{font-size:13px;color:var(--text)}
+
+/* ARCH TABLE */
+.arch-table{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:0.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:20px}
+.arch-col{}
+.arch-col-head{padding:14px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;color:#fff}
+.arch-item{padding:14px 16px;border-top:0.5px solid var(--border);display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
+.arch-item-icon{font-size:22px}
+.arch-item-name{font-size:13px;font-weight:600;color:var(--text)}
+.arch-item-tech{font-size:11px;color:var(--text3)}
+
+/* BOTTOM ARCH ROW */
+.arch-bottom{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
+.arch-b-card{border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.arch-b-icon{font-size:24px}
+.arch-b-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:13px;margin-bottom:2px}
+.arch-b-sub{font-size:11px;opacity:.75}
+
+/* QR SCAN PAGE */
+.qr-area{width:200px;height:200px;border:3px dashed var(--border);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;cursor:pointer;background:#fafafa;transition:all .2s;margin:0 auto}
+.qr-area:hover{border-color:var(--green);background:var(--green-light)}
+.qr-icon{font-size:48px}
+
+/* KEY ACTORS */
+.actor-card{display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--white);border-radius:10px;border:0.5px solid var(--border);margin-bottom:10px}
+.actor-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.actor-name{font-weight:700;font-size:14px;margin-bottom:2px}
+.actor-desc{font-size:12px;color:var(--text2)}
+
+/* WORKER LIST */
+.worker-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:9px;border:0.5px solid var(--border);margin-bottom:8px;cursor:pointer;transition:background .15s;background:var(--white)}
+.worker-row:hover{background:#f9fafb}
+.worker-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+.status-dot{width:9px;height:9px;border-radius:50%;margin-left:auto;flex-shrink:0}
+
+/* ALERT */
+.alert-card{background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.alert-card.success{background:var(--green-light);border-color:#a7f3d0}
+.alert-card.info{background:var(--blue-light);border-color:#bfdbfe}
+
+/* COMPLIANCE GAUGE */
+.compliance-bar{height:10px;border-radius:5px;background:var(--border);overflow:hidden;margin-top:6px}
+.compliance-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--green),#34d399);transition:width 1s ease}
+
+/* RECOMMENDATIONS */
+.rec-item{display:flex;gap:10px;align-items:center;padding:9px 12px;border-radius:8px;border:0.5px solid var(--border);margin-bottom:7px;background:#fafafa;font-size:13px}
+.rec-arrow{color:var(--green);font-weight:800;font-size:15px}
+
+/* UPLOAD */
+.upload-zone{border:2.5px dashed var(--border);border-radius:14px;padding:40px;text-align:center;cursor:pointer;transition:all .2s;background:#fafafa}
+.upload-zone:hover{border-color:var(--blue);background:var(--blue-light)}
+.upload-icon{font-size:40px;margin-bottom:12px}
+.doc-item{display:flex;align-items:center;gap:12px;padding:11px 14px;background:var(--white);border:0.5px solid var(--border);border-radius:10px;margin-bottom:8px}
+.doc-icon{font-size:22px}
+.doc-name{font-weight:600;font-size:13px}
+.doc-meta{font-size:11px;color:var(--text3)}
+.doc-status{margin-left:auto;font-size:11px;padding:3px 10px;border-radius:6px;font-weight:700;background:var(--green-light);color:var(--green-dark)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(29,106,232,0.4)}50%{box-shadow:0 0 0 8px rgba(29,106,232,0)}}
+.fade-up{animation:fadeUp .35s ease both}
+.fade-up-1{animation-delay:.05s}
+.fade-up-2{animation-delay:.1s}
+.fade-up-3{animation-delay:.15s}
+.fade-up-4{animation-delay:.2s}
+
+/* 2-col layout */
+.two-col{display:grid;grid-template-columns:380px 1fr;gap:18px;align-items:start}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.two-col-eq{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .stat-grid,.portal-grid,.tech-grid,.arch-table,.arch-bottom{grid-template-columns:repeat(2,1fr)}
+  .two-col{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">Swasthya<span>Setu</span></span>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showPage('dashboard')">Dashboard</button>
+    <button class="nav-link" onclick="showPage('risk')">Risk Analysis</button>
+    <button class="nav-link" onclick="showPage('scanqr')">Scan QR</button>
+    <button class="nav-link" onclick="showPage('docs')">Upload Documents</button>
+    <button class="nav-link" onclick="showPage('tracking')">Worker Tracking</button>
+  </div>
+  <div class="nav-right">
+    <button class="mock-badge" id="mockBtn" onclick="toggleMock()">Mock: ON</button>
+    <button class="lang-btn">Language EN ▾</button>
+    <button class="logout-btn">Logout</button>
+  </div>
+</nav>
+
+<!-- ==================== DASHBOARD ==================== -->
+<div class="page active" id="page-dashboard">
+  <div class="page-label">Overview</div>
+  <div class="page-title">SwasthyaSetu Dashboard</div>
+
+  <div class="stat-grid">
+    <div class="stat-card fade-up fade-up-1">
+      <div class="stat-val" style="color:var(--blue)">2,847</div>
+      <div class="stat-label">Workers Registered</div>
+      <div class="stat-sub">↑ 124 this month</div>
+    </div>
+    <div class="stat-card fade-up fade-up-2">
+      <div class="stat-val" style="color:var(--red)">342</div>
+      <div class="stat-label">High Risk Workers</div>
+      <div class="stat-sub">Require immediate screening</div>
+    </div>
+    <div class="stat-card fade-up fade-up-3">
+      <div class="stat-val" style="color:var(--green)">1,891</div>
+      <div class="stat-label">Documents Digitized</div>
+      <div class="stat-sub">Via Document AI</div>
+    </div>
+    <div class="stat-card fade-up fade-up-4">
+      <div class="stat-val" style="color:var(--purple)">12</div>
+      <div class="stat-label">States Active</div>
+      <div class="stat-sub">Across India</div>
+    </div>
+  </div>
+
+  <!-- Portal cards like Slide 6 -->
+  <div style="margin-bottom:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px">User Portals</div>
+  <div class="portal-grid" style="margin-bottom:28px">
+    <div class="portal-card fade-up fade-up-1" onclick="showPage('risk')" style="cursor:pointer">
+      <div class="p-icon">📱</div>
+      <div class="portal-badge pb-orange">Mobile App</div>
+      <div class="p-title">Worker Portal</div>
+      <div class="p-sub">QR code access, voice input, health records</div>
+      <div style="margin-top:12px;font-size:11px;color:var(--text3)">Flutter App</div>
+    </div>
+    <div class="portal-card fade-up fade-up-2" style="cursor:pointer">
+      <div class="p-icon">🏥</div>
+      <div class="portal-badge pb-green">ASHA Dashboard</div>
+      <div class="p-title">ASHA Worker</div>
+      <div class="p-sub">Village overview, migrant list, follow-up alerts</div>
+      <div style="margin-top:12px;font-size:11px;color:var(--text3)">Web Dashboard</div>
+    </div>
+    <div class="portal-card fade-up fade-up-3" onclick="showPage('scanqr')" style="cursor:pointer">
+      <div class="p-icon">🩺</div>
+      <div class="portal-badge pb-purple">Doctor Portal</div>
+      <div class="p-title">Healthcare Provider</div>
+      <div class="p-sub">Patient scan, history access, translation</div>
+      <div style="margin-top:12px;font-size:11px;color:var(--text3)">React Web App</div>
+    </div>
+    <div class="portal-card fade-up fade-up-4" style="cursor:pointer">
+      <div class="p-icon">🏗️</div>
+      <div class="portal-badge pb-orange">Employer Portal</div>
+      <div class="p-title">Employer</div>
+      <div class="p-sub">Worker count, health status, compliance</div>
+      <div style="margin-top:12px;font-size:11px;color:var(--text3)">Analytics Dashboard</div>
+    </div>
+  </div>
+
+  <!-- ASHA + Employer side by side -->
+  <div class="two-col-eq">
+    <!-- ASHA Dashboard mini -->
+    <div class="card fade-up">
+      <div class="portal-badge pb-green">ASHA Dashboard</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+        <div style="background:var(--blue-light);border-radius:10px;padding:14px;text-align:center">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;color:var(--blue)">150</div>
+          <div style="font-size:12px;color:var(--text2);font-weight:600">Total</div>
+        </div>
+        <div style="background:var(--orange-light);border-radius:10px;padding:14px;text-align:center">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;color:var(--orange)">45</div>
+          <div style="font-size:12px;color:var(--text2);font-weight:600">Migrated</div>
+        </div>
+      </div>
+      <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Migrant List</div>
+      <div class="worker-row">
+        <div class="worker-avatar" style="background:var(--green-light);color:var(--green-dark)">RK</div>
+        <div><div style="font-weight:600;font-size:13px">Ramesh K.</div><div style="font-size:11px;color:var(--text3)">Stone Quarry · Bengaluru</div></div>
+        <div class="status-dot" style="background:#16a34a"></div>
+      </div>
+      <div class="worker-row">
+        <div class="worker-avatar" style="background:var(--orange-light);color:var(--orange-dark)">SP</div>
+        <div><div style="font-weight:600;font-size:13px">Suresh P.</div><div style="font-size:11px;color:var(--text3)">Textile Mill · Surat</div></div>
+        <div class="status-dot" style="background:#f59e0b"></div>
+      </div>
+      <div class="alert-card" style="margin-top:12px">
+        <div style="font-weight:700;font-size:13px;color:#dc2626;margin-bottom:3px">⚠ Active Alert</div>
+        <div style="font-size:12px;color:#7f1d1d">3 workers returning — schedule follow-up</div>
+      </div>
+    </div>
+
+    <!-- Employer Dashboard mini -->
+    <div class="card fade-up fade-up-2">
+      <div class="portal-badge pb-orange">Employer Portal</div>
+      <div style="background:linear-gradient(135deg,var(--orange),var(--orange-dark));border-radius:12px;padding:16px;text-align:center;margin-bottom:16px">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:42px;font-weight:800;color:#fff;line-height:1">250</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.85);margin-top:4px;font-weight:600">Registered Workers</div>
+      </div>
+      <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Health Status</div>
+      <div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span style="font-weight:600">Healthy</span><span style="color:var(--green);font-weight:700">180</span></div>
+        <div class="compliance-bar"><div class="compliance-fill" style="width:72%"></div></div>
+      </div>
+      <div style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span style="font-weight:600">At Risk</span><span style="color:var(--amber);font-weight:700">50</span></div>
+        <div class="compliance-bar"><div class="compliance-fill" style="width:20%;background:linear-gradient(90deg,var(--amber),#fbbf24)"></div></div>
+      </div>
+      <div style="background:var(--green-light);border-radius:10px;padding:11px 14px;display:flex;align-items:center;gap:10px">
+        <div style="font-size:20px">✅</div>
+        <div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;color:var(--green-dark)">95% Compliant</div>
+          <div style="font-size:11px;color:var(--green-dark);opacity:.8">OSH Code 2020</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== RISK ANALYSIS ==================== -->
+<div class="page" id="page-risk">
+  <div class="page-label">KaamSuraksha AI</div>
+  <div class="page-title">Occupational Risk Analysis</div>
+  <div class="two-col">
+    <!-- Left form -->
+    <div class="card">
+      <div class="portal-badge pb-purple">KaamSuraksha Risk Input</div>
+      <div class="form-group">
+        <label class="form-label">Worker ID</label>
+        <input type="text" id="risk-worker-id" placeholder="UUID worker id" oninput="autofillWorker(this.value)"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Occupation</label>
+        <select id="risk-occ" onchange="updateRiskPreview()">
+          <option>Stone Quarry</option>
+          <option>Construction</option>
+          <option>Textile Mill</option>
+          <option>Coal Mining</option>
+          <option>Chemical Factory</option>
+          <option>Brick Kiln</option>
+          <option>Agriculture</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Years in job: <span id="years-val">8</span></label>
+        <input type="range" min="0" max="30" value="8" id="risk-years" oninput="document.getElementById('years-val').textContent=this.value"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tasks</label>
+        <div class="checkbox-grid">
+          <label class="cb-item checked"><input type="checkbox" checked onchange="toggleCb(this)"> drilling</label>
+          <label class="cb-item checked"><input type="checkbox" checked onchange="toggleCb(this)"> stone_cutting</label>
+          <label class="cb-item"><input type="checkbox" onchange="toggleCb(this)"> sandblasting</label>
+          <label class="cb-item"><input type="checkbox" onchange="toggleCb(this)"> spinning</label>
+          <label class="cb-item"><input type="checkbox" onchange="toggleCb(this)"> weaving</label>
+          <label class="cb-item"><input type="checkbox" onchange="toggleCb(this)"> chemical_mixing</label>
+          <label class="cb-item"><input type="checkbox" onchange="toggleCb(this)"> fume_exposure</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">PPE Usage</label>
+        <select id="risk-ppe">
+          <option>Never</option>
+          <option selected>Rarely</option>
+          <option>Sometimes</option>
+          <option>Always</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Symptoms</label>
+        <div class="checkbox-grid">
+          <label class="cb-item checked"><input type="checkbox" checked onchange="toggleCb(this)"> persistent_cough</label>
+          <label class="cb-item"><input type="checkbox" onchange="toggleCb(this)"> breathlessness</label>
+          <label class="cb-item"><input type="checkbox" onchange="toggleCb(this)"> chest_tightness</label>
+          <label class="cb-item"><input type="checkbox" onchange="toggleCb(this)"> wheeze</label>
+        </div>
+      </div>
+      <button class="btn-primary btn-purple" onclick="analyzeRisk()">🔍 Analyze Occupational Risk</button>
+    </div>
+
+    <!-- Right results -->
+    <div>
+      <!-- Risk card -->
+      <div class="risk-card fade-up" id="risk-card" style="background:var(--green);margin-bottom:16px">
+        <div class="risk-label">Predicted Occupational Risk</div>
+        <div class="risk-pct" id="risk-pct">0%</div>
+        <div class="risk-level" id="risk-lvl">Risk level: LOW</div>
+        <div class="risk-disease" id="risk-dis">Likely disease: –</div>
+      </div>
+
+      <!-- SHAP -->
+      <div class="card" style="margin-bottom:14px">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;margin-bottom:12px">Top SHAP-style Factors</div>
+        <div id="shap-content" style="color:var(--text3);font-size:13px">No factors yet.</div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="card">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;margin-bottom:12px">Recommended Screening</div>
+        <div id="rec-content" style="color:var(--text3);font-size:13px">Run an assessment to generate actions.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SCAN QR ==================== -->
+<div class="page" id="page-scanqr">
+  <div class="page-label">Doctor Portal</div>
+  <div class="page-title">Patient Scan & Medical History</div>
+  <div class="two-col">
+    <div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="portal-badge pb-purple">Patient Scan</div>
+        <div class="qr-area" onclick="simulateScan()">
+          <div class="qr-icon">📷</div>
+          <div style="font-weight:600;font-size:14px">Scan Patient QR Code</div>
+          <div style="font-size:12px;color:var(--text3)">Click to simulate scan</div>
+        </div>
+        <input type="text" placeholder="Or enter Worker ID manually" style="margin-top:16px" id="scan-id" oninput="if(this.value==='SW-001')showPatient()"/>
+      </div>
+      <div class="card">
+        <div class="portal-badge pb-blue">Translation</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <select style="flex:1"><option>Odia</option><option>Hindi</option><option>Bengali</option></select>
+          <span style="font-size:20px;color:var(--text3)">⇄</span>
+          <select style="flex:1"><option>Kannada</option><option>Tamil</option><option>Telugu</option></select>
+        </div>
+        <textarea style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:13px;resize:vertical;min-height:80px;outline:none" placeholder="Type doctor's instructions to translate..."></textarea>
+        <button class="btn-primary btn-blue" style="margin-top:8px">Translate Instructions</button>
+      </div>
+    </div>
+    <div>
+      <div class="card" id="patient-record" style="display:none">
+        <div class="portal-badge pb-purple">Medical History</div>
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;padding:14px;background:#f9fafb;border-radius:10px">
+          <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--blue));display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:18px;color:#fff">RK</div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:17px">Ramesh Kumar</div>
+            <div style="font-size:12px;color:var(--text2)">SW-001 · Age 34 · O+ · Karnataka</div>
+            <div style="margin-top:6px;display:inline-flex;align-items:center;gap:6px;background:#fde8e8;color:#c01c1c;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">🔴 CRITICAL RISK — Silicosis</div>
+          </div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Conditions</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+          <span style="background:var(--red-light);color:var(--red);padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700">Silicosis Risk (Stage 1)</span>
+          <span style="background:var(--amber-light);color:var(--amber);padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700">Persistent Cough</span>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Visit History</div>
+        <div class="timeline-entry migration">
+          <div style="flex:1"><div class="tl-city">Karnataka PHC, Bengaluru</div><div class="tl-time">Feb 15, 2024 · Dr. Anitha R.</div></div>
+          <span class="tl-badge tl-b-migration">Latest</span>
+        </div>
+        <div class="timeline-entry">
+          <div style="flex:1"><div class="tl-city">Odisha District Hospital</div><div class="tl-time">Jan 03, 2024 · Dr. Prashant</div></div>
+          <span class="tl-badge tl-b-origin">Origin</span>
+        </div>
+      </div>
+      <div id="scan-placeholder" class="card" style="text-align:center;padding:60px 20px">
+        <div style="font-size:48px;margin-bottom:14px">🩺</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:16px;margin-bottom:6px">No patient loaded</div>
+        <div style="font-size:13px;color:var(--text3)">Scan a QR code or enter Worker ID to view medical history</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== DOCUMENTS ==================== -->
+<div class="page" id="page-docs">
+  <div class="page-label">Document AI</div>
+  <div class="page-title">Upload & Digitize Documents</div>
+  <div class="two-col">
+    <div>
+      <div class="card">
+        <div class="portal-badge pb-blue">Upload Document</div>
+        <div class="upload-zone" onclick="simulateUpload()">
+          <div class="upload-icon">📄</div>
+          <div style="font-weight:700;font-size:15px;margin-bottom:4px">Drop prescription or report here</div>
+          <div style="font-size:13px;color:var(--text3)">JPG, PNG, PDF supported</div>
+          <button class="btn-primary btn-blue" style="width:auto;padding:10px 24px;margin-top:16px">Choose File</button>
+        </div>
+        <div style="margin-top:16px">
+          <div class="form-group">
+            <label class="form-label">Worker ID</label>
+            <input type="text" placeholder="SW-001" id="doc-worker-id"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Document Type</label>
+            <select><option>Prescription</option><option>Lab Report</option><option>Discharge Summary</option><option>X-Ray Report</option></select>
+          </div>
+          <button class="btn-primary btn-blue">⚡ Digitize with OCR</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;margin-bottom:14px">Digitized Records</div>
+        <div class="doc-item">
+          <div class="doc-icon">📋</div>
+          <div style="flex:1"><div class="doc-name">Prescription_RameshK_Feb2024.pdf</div><div class="doc-meta">Extracted: Azithromycin 500mg · Once daily · 5 days</div></div>
+          <span class="doc-status">Digitized ✓</span>
+        </div>
+        <div class="doc-item">
+          <div class="doc-icon">🧪</div>
+          <div style="flex:1"><div class="doc-name">ChestXRay_SW001_Jan2024.jpg</div><div class="doc-meta">Finding: Early stage silicosis pattern detected</div></div>
+          <span class="doc-status">Digitized ✓</span>
+        </div>
+        <div class="doc-item">
+          <div class="doc-icon">📊</div>
+          <div style="flex:1"><div class="doc-name">BloodReport_MeenaD_Mar2024.pdf</div><div class="doc-meta">Extracted: Hb 10.2, WBC 7400, Platelets Normal</div></div>
+          <span class="doc-status" style="background:var(--amber-light);color:var(--amber)">Processing…</span>
+        </div>
+        <div id="upload-result" style="display:none" class="alert-card success" style="margin-top:14px">
+          <div style="font-weight:700;color:var(--green-dark);margin-bottom:4px">✅ Document digitized successfully</div>
+          <div style="font-size:12px;color:var(--green-dark)">Drug: Metformin 500mg · Twice daily · 30 days · Dr. S. Rao</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== WORKER TRACKING ==================== -->
+<div class="page" id="page-tracking">
+  <div class="page-label">SehatSetu</div>
+  <div class="page-title">Worker Location Sync</div>
+  <div class="two-col">
+    <div class="card">
+      <div class="portal-badge pb-green">SehatSetu Location Sync</div>
+      <div class="form-group">
+        <label class="form-label">Worker ID</label>
+        <input type="text" id="track-id" placeholder="Enter Worker ID (try SW-001)" oninput="autofillLocation(this.value)"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">State</label>
+        <input type="text" id="track-state" placeholder="State" value="Maharashtra"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">City</label>
+        <input type="text" id="track-city" placeholder="City" value="Mumbai"/>
+      </div>
+      <div class="two-col-eq">
+        <div class="form-group">
+          <label class="form-label">Latitude</label>
+          <input type="text" id="track-lat" value="19.0760"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Longitude</label>
+          <input type="text" id="track-lng" value="72.8777"/>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="saveLocation()">📍 Save Location</button>
+    </div>
+
+    <div>
+      <div class="card">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;margin-bottom:14px">Location Timeline</div>
+        <div id="timeline-list">
+          <div class="timeline-entry">
+            <div style="flex:1">
+              <div class="tl-city">Bhubaneswar, Odisha</div>
+              <div class="tl-time">Jan 15, 2024 · 08:30 AM</div>
+            </div>
+            <span class="tl-badge tl-b-origin">Origin</span>
+          </div>
+          <div class="timeline-entry migration">
+            <div style="flex:1">
+              <div class="tl-city">Bengaluru, Karnataka</div>
+              <div class="tl-time">Feb 01, 2024 · 06:00 AM</div>
+            </div>
+            <span class="tl-badge tl-b-migration">Migration</span>
+          </div>
+          <div class="timeline-entry update">
+            <div style="flex:1">
+              <div class="tl-city">Mumbai, Maharashtra</div>
+              <div class="tl-time">Mar 10, 2024 · 11:45 AM</div>
+            </div>
+            <span class="tl-badge tl-b-update">Update</span>
+          </div>
+        </div>
+        <!-- Map placeholder -->
+        <div style="margin-top:16px;height:180px;background:linear-gradient(135deg,#e8f4f8,#dbeafe);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1px dashed #bfdbfe">
+          <div style="font-size:32px">🗺️</div>
+          <div style="font-weight:700;font-size:14px;color:var(--blue-dark)">Interactive Map</div>
+          <div style="font-size:12px;color:var(--text3)">India worker migration map · Coming soon</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script>
+let mockOn = true;
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const map = { dashboard: 0, risk: 1, scanqr: 2, docs: 3, tracking: 4 };
+  document.querySelectorAll('.nav-link')[map[id]].classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function toggleCb(el) {
+  el.closest('.cb-item').classList.toggle('checked', el.checked);
+}
+
+function toggleMock() {
+  mockOn = !mockOn;
+  const btn = document.getElementById('mockBtn');
+  btn.textContent = mockOn ? 'Mock: ON' : 'Mock: OFF';
+  btn.className = mockOn ? 'mock-badge' : 'mock-badge off';
+}
+
+const DISEASE_MAP = {
+  'Stone Quarry': 'Silicosis', 'Construction': 'Silicosis', 'Textile Mill': 'Byssinosis',
+  'Coal Mining': 'CWP (Coal Workers Pneumoconiosis)', 'Chemical Factory': 'Occupational Asthma',
+  'Brick Kiln': 'Heat Stroke Risk', 'Agriculture': 'Pesticide Poisoning Risk'
+};
+const REC_MAP = {
+  'Stone Quarry': ['Chest X-ray immediately', 'Spirometry test', 'Refer to occupational specialist', 'N95 respirator daily'],
+  'Textile Mill': ['Pulmonary function test', 'Avoid cotton dust', 'Use dust mask always'],
+  'Coal Mining': ['Chest X-ray', 'HRCT scan', 'Pulmonary rehab program', 'Annual screening'],
+  'Chemical Factory': ['Skin + respiratory allergy tests', 'Avoid direct chemical contact'],
+  'Construction': ['Chest X-ray', 'Spirometry', 'PPE compliance check'],
+  'Brick Kiln': ['Heat stress assessment', 'Hydration monitoring', 'Regular rest breaks'],
+  'Agriculture': ['Blood cholinesterase test', 'Avoid pesticide direct contact'],
+};
+
+function analyzeRisk() {
+  if (mockOn) {
+    const occ = document.getElementById('risk-occ').value;
+    const years = parseInt(document.getElementById('risk-years').value);
+    const tasks = [...document.querySelectorAll('#page-risk .cb-item.checked input')].map(i => i.parentElement.textContent.trim()).filter(t => ['drilling','stone_cutting','sandblasting','spinning','weaving','chemical_mixing','fume_exposure'].includes(t));
+    const ppe = document.getElementById('risk-ppe').value;
+    const symptoms = [...document.querySelectorAll('#page-risk .cb-item.checked input')].map(i => i.parentElement.textContent.trim()).filter(t => ['persistent_cough','breathlessness','chest_tightness','wheeze'].includes(t));
+
+    const occRisk = {'Stone Quarry':35,'Construction':25,'Textile Mill':30,'Coal Mining':38,'Chemical Factory':28,'Brick Kiln':20,'Agriculture':15};
+    let score = (occRisk[occ] || 5) + Math.min(years * 3, 25);
+    const riskTasks = ['drilling','stone_cutting','sandblasting','chemical_mixing','fume_exposure'];
+    score += tasks.filter(t => riskTasks.includes(t)).length * 6;
+    const ppeMap = {'Never':15,'Rarely':12,'Sometimes':6,'Always':0};
+    score += ppeMap[ppe] || 0;
+    const symMap = {'persistent_cough':8,'breathlessness':10,'chest_tightness':7,'wheeze':6};
+    symptoms.forEach(s => { score += symMap[s] || 0; });
+    score = Math.min(score, 100);
+
+    const level = score >= 70 ? 'CRITICAL' : score >= 50 ? 'HIGH' : score >= 30 ? 'MEDIUM' : 'LOW';
+    const color = score >= 70 ? '#c01414' : score >= 50 ? '#d97706' : score >= 30 ? '#1d6ae8' : '#1a9e5c';
+    const disease = DISEASE_MAP[occ] || 'Occupational Disease';
+    const recs = REC_MAP[occ] || ['Consult occupational health doctor', 'Annual health checkup'];
+
+    // Animate risk card
+    const card = document.getElementById('risk-card');
+    card.style.background = color;
+    animateNumber('risk-pct', 0, score, '%', 800);
+    document.getElementById('risk-lvl').textContent = 'Risk level: ' + level;
+    document.getElementById('risk-dis').textContent = 'Likely disease: ' + (score > 10 ? disease : '–');
+
+    // SHAP factors
+    const factors = [
+      { label: `Occupation: ${occ}`, impact: occRisk[occ] || 5 },
+      { label: `${years} years in job`, impact: Math.min(years * 3, 25) },
+      { label: `PPE Usage: ${ppe}`, impact: ppeMap[ppe] || 0 },
+    ].filter(f => f.impact > 0).sort((a, b) => b.impact - a.impact).slice(0, 3);
+
+    const shapHTML = factors.map(f => `
+      <div style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px">
+          <span style="font-weight:600">${f.label}</span>
+          <span style="color:${color};font-weight:700">+${f.impact}%</span>
+        </div>
+        <div style="height:8px;background:#f3f4f6;border-radius:4px;overflow:hidden">
+          <div style="height:100%;width:${Math.round((f.impact/40)*100)}%;background:${color};border-radius:4px;transition:width .8s ease"></div>
+        </div>
+      </div>`).join('');
+    document.getElementById('shap-content').innerHTML = shapHTML;
+
+    // Recommendations
+    document.getElementById('rec-content').innerHTML = recs.map(r =>
+      `<div style="display:flex;gap:10px;align-items:center;padding:9px 12px;border-radius:8px;border:0.5px solid var(--border);margin-bottom:7px;background:#fafafa;font-size:13px"><span style="color:var(--green);font-weight:800;font-size:15px">→</span><span>${r}</span></div>`
+    ).join('');
+  }
+}
+
+function animateNumber(id, from, to, suffix, duration) {
+  const el = document.getElementById(id);
+  const start = performance.now();
+  function step(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.round(from + (to - from) * ease) + suffix;
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function autofillWorker(v) {
+  if (v === 'SW-001') {
+    document.getElementById('risk-occ').value = 'Stone Quarry';
+    document.getElementById('risk-years').value = 8;
+    document.getElementById('years-val').textContent = '8';
+    document.getElementById('risk-ppe').value = 'Rarely';
+  }
+}
+
+function simulateScan() {
+  document.getElementById('scan-id').value = 'SW-001';
+  showPatient();
+}
+
+function showPatient() {
+  document.getElementById('patient-record').style.display = 'block';
+  document.getElementById('scan-placeholder').style.display = 'none';
+}
+
+function simulateUpload() {
+  setTimeout(() => {
+    document.getElementById('upload-result').style.display = 'block';
+  }, 1200);
+}
+
+const LOCATION_DATA = {
+  'SW-001': { state: 'Karnataka', city: 'Bengaluru', lat: '12.9716', lng: '77.5946' },
+  'SW-002': { state: 'Gujarat', city: 'Surat', lat: '21.1702', lng: '72.8311' },
+  'SW-003': { state: 'Delhi', city: 'New Delhi', lat: '28.6139', lng: '77.2090' },
+};
+
+function autofillLocation(v) {
+  const d = LOCATION_DATA[v];
+  if (d) {
+    document.getElementById('track-state').value = d.state;
+    document.getElementById('track-city').value = d.city;
+    document.getElementById('track-lat').value = d.lat;
+    document.getElementById('track-lng').value = d.lng;
+  }
+}
+
+function saveLocation() {
+  const id = document.getElementById('track-id').value || '–';
+  const city = document.getElementById('track-city').value || '–';
+  const state = document.getElementById('track-state').value || '–';
+  if (!id || !city || !state) { alert('Please fill Worker ID, State, and City'); return; }
+  const now = new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+  const entry = document.createElement('div');
+  entry.className = 'timeline-entry update fade-up';
+  entry.innerHTML = `<div style="flex:1"><div class="tl-city">${city}, ${state}</div><div class="tl-time">${now} · Just now</div></div><span class="tl-badge tl-b-update">Live Update</span>`;
+  const list = document.getElementById('timeline-list');
+  list.insertBefore(entry, list.firstChild);
+}
+
+function updateRiskPreview() {}
+</script>
+</body>
+</html>

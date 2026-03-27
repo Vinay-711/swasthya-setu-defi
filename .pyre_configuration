@@ -1,0 +1,17 @@
+{
+  "source_directories": ["backend"],
+  "search_path": [
+    "/Users/vinxy/SWASTYA-SETU DEFI/.venv/lib/python3.14/site-packages",
+    "/Users/vinxy/SWASTYA-SETU DEFI/backend"
+  ],
+  "python_version": "3.14",
+  "exclude": [
+    ".*tests/.*",
+    ".*database/seed\\.py",
+    ".*app/routes/kaamsuraksha\\.py",
+    ".*app/routes/__init__\\.py",
+    ".*app/routes/router_registry\\.py",
+    ".*app/services/mock_responses\\.py"
+  ],
+  "strict": false
+}

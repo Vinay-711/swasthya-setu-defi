@@ -1,0 +1,82 @@
+_format_version: "3.0"
+
+services:
+  # ─── Identity Service (Node.js) ───
+  - name: identity-service
+    url: http://identity-service:3001
+    routes:
+      - name: identity-route
+        paths:
+          - /api/v1/identity
+        strip_path: false
+
+  # ─── Health Records Service (Node.js) ───
+  - name: health-service
+    url: http://health-service:3002
+    routes:
+      - name: health-route
+        paths:
+          - /api/v1/health-records
+        strip_path: false
+
+  # ─── AI/ML Service (Python) ───
+  - name: ai-ml-service
+    url: http://ai-ml-service:5001
+    routes:
+      - name: ai-route
+        paths:
+          - /api/v1/ai
+        strip_path: false
+
+  # ─── Translation Service (Python) ───
+  - name: translation-service
+    url: http://translation-service:5002
+    routes:
+      - name: translation-route
+        paths:
+          - /api/v1/translate
+        strip_path: false
+
+  # ─── Document Service (Python) ───
+  - name: document-service
+    url: http://document-service:5003
+    routes:
+      - name: document-route
+        paths:
+          - /api/v1/documents
+        strip_path: false
+
+  # ─── Notification Service (Node.js) ───
+  - name: notification-service
+    url: http://notification-service:3006
+    routes:
+      - name: notification-route
+        paths:
+          - /api/v1/notifications
+        strip_path: false
+
+plugins:
+  # ─── Global Plugins ───
+  - name: cors
+    config:
+      origins:
+        - "*"
+      methods:
+        - GET
+        - POST
+        - PUT
+        - DELETE
+        - OPTIONS
+      headers:
+        - Content-Type
+        - Authorization
+      max_age: 3600
+
+  - name: rate-limiting
+    config:
+      minute: 100
+      policy: local
+
+  - name: request-size-limiting
+    config:
+      allowed_payload_size: 10  # MB

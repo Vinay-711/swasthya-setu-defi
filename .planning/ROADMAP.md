@@ -133,12 +133,12 @@ SwasthyaSetu will be built in 12 fine-grained phases, starting from foundational
 **Execution Order:**
 Phases execute in numeric order: 1 → 2 → 3 → ... → 12
 
-| Phase | Plans Complete | Status | Completed |
-|-------|----------------|--------|-----------|
+| Phase | Plans | Status | Completed |
+|-------|-------|--------|-----------|
 | 1. Foundation & RBAC | 0/TBD | Not started | - |
-| 2. Worker OTP Auth | 0/TBD | Not started | - |
-| 3. Identity & ABHA integration | 0/TBD | Not started | - |
-| 4. Health Record MVP | 0/TBD | Not started | - |
+| 2. Worker OTP Auth | 0/TBD | Complete | 2026-03-26 |
+| 3. Identity & ABHA integration | 1/1 | Complete | 2026-03-26 |
+| 4. Health Record MVP | 1/1 | Complete | 2026-03-27 |
 | 5. Document AI | 0/TBD | Not started | - |
 | 6. Audio Pipeline MVP | 0/TBD | Not started | - |
 | 7. BhashaSehat NLP | 0/TBD | Not started | - |

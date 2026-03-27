@@ -1,0 +1,31 @@
+{
+  "pythonVersion": "3.12",
+  "venvPath": ".",
+  "venv": ".venv",
+  "extraPaths": [
+    "backend",
+    "backend/app",
+    "backend/database",
+    "backend/services/ai-ml-service",
+    "backend/services/document-service",
+    "backend/services/translation-service",
+    "backend/services/notification-service",
+    "backend/services/health-service"
+  ],
+  "typeCheckingMode": "off",
+  "reportMissingImports": false,
+  "reportMissingModuleSource": false,
+  "reportGeneralTypeIssues": false,
+  "reportCallIssue": false,
+  "reportIndexIssue": false,
+  "reportArgumentType": false,
+  "reportOptionalMemberAccess": false,
+  "reportOptionalSubscript": false,
+  "reportUnusedImport": false,
+  "reportUnusedVariable": false,
+  "reportMissingTypeStubs": false,
+  "reportUnknownMemberType": false,
+  "reportUnknownParameterType": false,
+  "reportUnknownVariableType": false,
+  "reportUnknownArgumentType": false
+}

@@ -1,0 +1,1808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SwasthyaSetu</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --green:#1a9e5c;--green-light:#e8f7ef;--green-dark:#0f6b3c;
+  --orange:#e8620f;--orange-light:#fdf0e8;--orange-dark:#c04d08;
+  --blue:#1d6ae8;--blue-light:#e8f0fd;--blue-dark:#1450b8;
+  --purple:#7c2de8;--purple-light:#f0e8fd;--purple-dark:#5c1fbe;
+  --red:#e01c1c;--red-light:#fde8e8;
+  --amber:#d97706;--amber-light:#fef3c7;
+  --nav:#0f1923;--nav2:#1a2635;
+  --bg:#f4f6f9;--white:#ffffff;
+  --text:#111827;--text2:#6b7280;--text3:#9ca3af;
+  --border:#e5e7eb;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+h1,h2,h3,.heading{font-family:'Plus Jakarta Sans',sans-serif}
+
+/* NAV */
+nav{background:var(--nav);padding:0 28px;display:flex;align-items:center;height:60px;gap:0;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,0.3)}
+.nav-brand{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:18px;color:#fff;margin-right:32px;letter-spacing:-0.3px}
+.nav-brand span{color:var(--green)}
+.nav-links{display:flex;gap:2px;flex:1}
+.nav-link{padding:8px 16px;color:rgba(255,255,255,0.6);font-size:13.5px;font-weight:500;cursor:pointer;border-radius:8px;transition:all .15s;border:none;background:none;white-space:nowrap}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,0.08)}
+.nav-link.active{color:#fff;background:rgba(255,255,255,0.12)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.mock-badge{padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.3px;border:none;background:#16a34a;color:#fff;transition:all .15s}
+.mock-badge.off{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.5)}
+.lang-btn{padding:5px 12px;border-radius:8px;font-size:12px;font-weight:600;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);border:0.5px solid rgba(255,255,255,0.15);cursor:pointer}
+.logout-btn{padding:5px 14px;border-radius:8px;font-size:12px;font-weight:600;background:transparent;color:rgba(255,255,255,0.5);border:0.5px solid rgba(255,255,255,0.15);cursor:pointer}
+
+/* PAGE */
+.page{display:none;padding:28px 28px 40px;max-width:1300px;margin:0 auto}
+.page.active{display:block}
+
+/* PAGE HEADER */
+.page-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);margin-bottom:6px}
+.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;color:var(--text);margin-bottom:24px;letter-spacing:-0.5px}
+
+/* CARDS */
+.card{background:var(--white);border-radius:14px;border:0.5px solid var(--border);padding:20px 22px}
+.card-sm{background:var(--white);border-radius:12px;border:0.5px solid var(--border);padding:16px 18px}
+
+/* PORTAL BADGE — matching slide style */
+.portal-badge{display:inline-flex;align-items:center;justify-content:center;padding:6px 20px;border-radius:20px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1px;margin-bottom:18px}
+.pb-green{background:var(--green);color:#fff}
+.pb-orange{background:var(--orange);color:#fff}
+.pb-blue{background:var(--blue);color:#fff}
+.pb-purple{background:var(--purple);color:#fff}
+
+/* STAGE BOXES — matching process flow slide */
+.flow-stage{border-radius:12px;padding:0;overflow:hidden;flex:1}
+.stage-header{padding:14px 16px;text-align:center}
+.stage-header .stage-label{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;opacity:.85;margin-bottom:3px}
+.stage-header .stage-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;color:#fff}
+.stage-body{background:var(--white);padding:14px 12px}
+.stage-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 6px;border-radius:8px}
+.stage-item:hover{background:#f9fafb}
+.stage-icon{font-size:20px}
+.stage-item-label{font-size:12px;font-weight:500;color:var(--text2);text-align:center}
+
+/* STAT CARDS */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat-card{background:var(--white);border-radius:12px;border:0.5px solid var(--border);padding:16px 18px}
+.stat-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;letter-spacing:-1px;margin-bottom:2px}
+.stat-label{font-size:12px;color:var(--text2);font-weight:500}
+.stat-sub{font-size:11px;color:var(--text3);margin-top:6px}
+
+/* RISK */
+.risk-card{border-radius:16px;padding:28px 28px;color:#fff;transition:background .4s}
+.risk-pct{font-family:'Plus Jakarta Sans',sans-serif;font-size:64px;font-weight:800;letter-spacing:-3px;line-height:1}
+.risk-label{font-size:13px;opacity:.85;margin-bottom:8px}
+.risk-level{font-size:17px;font-weight:700;margin-top:10px}
+.risk-disease{font-size:14px;opacity:.9;margin-top:4px}
+.shap-bar-track{height:7px;border-radius:4px;background:rgba(255,255,255,0.2);overflow:hidden;margin-top:6px}
+.shap-bar-fill{height:100%;border-radius:4px;background:rgba(255,255,255,0.8);transition:width .8s ease}
+
+/* FORM ELEMENTS */
+.form-group{margin-bottom:16px}
+.form-label{font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block}
+input[type=text],input[type=number],select{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);background:var(--white);outline:none;transition:border .15s}
+input[type=text]:focus,input[type=number]:focus,select:focus{border-color:var(--blue)}
+input[type=range]{width:100%;accent-color:var(--green)}
+
+.checkbox-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.cb-item{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;font-size:13px;background:var(--white);transition:all .15s;user-select:none}
+.cb-item.checked{border-color:var(--green);background:var(--green-light);color:var(--green-dark);font-weight:600}
+.cb-item input{display:none}
+
+.btn-primary{width:100%;padding:12px;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;cursor:pointer;border:none;color:#fff;background:linear-gradient(135deg,var(--green),var(--green-dark));letter-spacing:.2px;transition:opacity .15s;margin-top:8px}
+.btn-primary:hover{opacity:.9}
+.btn-blue{background:linear-gradient(135deg,var(--blue),var(--blue-dark))}
+.btn-orange{background:linear-gradient(135deg,var(--orange),var(--orange-dark))}
+.btn-purple{background:linear-gradient(135deg,var(--purple),var(--purple-dark))}
+
+/* TIMELINE */
+.timeline-entry{display:flex;gap:12px;padding:12px 14px;background:#f9fafb;border-radius:10px;border-left:3px solid var(--green);margin-bottom:10px}
+.timeline-entry.migration{border-left-color:var(--orange)}
+.timeline-entry.update{border-left-color:var(--blue)}
+.tl-city{font-weight:700;font-size:14px}
+.tl-time{font-size:11px;color:var(--text3);margin-top:2px}
+.tl-badge{font-size:10px;padding:2px 8px;border-radius:6px;font-weight:700;align-self:flex-start;white-space:nowrap;margin-top:2px}
+.tl-b-origin{background:var(--green-light);color:var(--green-dark)}
+.tl-b-migration{background:var(--orange-light);color:var(--orange-dark)}
+.tl-b-update{background:var(--blue-light);color:var(--blue-dark)}
+
+/* PORTAL CARDS — slide 6 style */
+.portal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.portal-card{background:var(--white);border-radius:14px;border:0.5px solid var(--border);padding:20px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.portal-card .p-icon{font-size:32px;margin-bottom:6px}
+.portal-card .p-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;margin-bottom:4px}
+.portal-card .p-sub{font-size:12px;color:var(--text2)}
+
+/* TECH GRID */
+.tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.tech-card{background:var(--white);border-radius:12px;border:0.5px solid var(--border);overflow:hidden}
+.tech-card-head{padding:12px 16px;display:flex;align-items:center;gap:10px}
+.tech-card-head .t-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.tech-card-head .t-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px}
+.tech-item{padding:10px 16px;border-top:0.5px solid var(--border)}
+.tech-item-label{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:2px}
+.tech-item-val{font-size:13px;color:var(--text)}
+
+/* ARCH TABLE */
+.arch-table{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:0.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:20px}
+.arch-col{}
+.arch-col-head{padding:14px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;color:#fff}
+.arch-item{padding:14px 16px;border-top:0.5px solid var(--border);display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
+.arch-item-icon{font-size:22px}
+.arch-item-name{font-size:13px;font-weight:600;color:var(--text)}
+.arch-item-tech{font-size:11px;color:var(--text3)}
+
+/* BOTTOM ARCH ROW */
+.arch-bottom{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
+.arch-b-card{border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.arch-b-icon{font-size:24px}
+.arch-b-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:13px;margin-bottom:2px}
+.arch-b-sub{font-size:11px;opacity:.75}
+
+/* QR SCAN PAGE */
+.qr-area{width:200px;height:200px;border:3px dashed var(--border);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;cursor:pointer;background:#fafafa;transition:all .2s;margin:0 auto}
+.qr-area:hover{border-color:var(--green);background:var(--green-light)}
+.qr-icon{font-size:48px}
+
+/* KEY ACTORS */
+.actor-card{display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--white);border-radius:10px;border:0.5px solid var(--border);margin-bottom:10px}
+.actor-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.actor-name{font-weight:700;font-size:14px;margin-bottom:2px}
+.actor-desc{font-size:12px;color:var(--text2)}
+
+/* WORKER LIST */
+.worker-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:9px;border:0.5px solid var(--border);margin-bottom:8px;cursor:pointer;transition:background .15s;background:var(--white)}
+.worker-row:hover{background:#f9fafb}
+.worker-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+.status-dot{width:9px;height:9px;border-radius:50%;margin-left:auto;flex-shrink:0}
+
+/* ALERT */
+.alert-card{background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.alert-card.success{background:var(--green-light);border-color:#a7f3d0}
+.alert-card.info{background:var(--blue-light);border-color:#bfdbfe}
+
+/* COMPLIANCE GAUGE */
+.compliance-bar{height:10px;border-radius:5px;background:var(--border);overflow:hidden;margin-top:6px}
+.compliance-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--green),#34d399);transition:width 1s ease}
+
+/* RECOMMENDATIONS */
+.rec-item{display:flex;gap:10px;align-items:center;padding:9px 12px;border-radius:8px;border:0.5px solid var(--border);margin-bottom:7px;background:#fafafa;font-size:13px}
+.rec-arrow{color:var(--green);font-weight:800;font-size:15px}
+
+/* UPLOAD */
+.upload-zone{border:2.5px dashed var(--border);border-radius:14px;padding:40px;text-align:center;cursor:pointer;transition:all .2s;background:#fafafa}
+.upload-zone:hover{border-color:var(--blue);background:var(--blue-light)}
+.upload-icon{font-size:40px;margin-bottom:12px}
+.doc-item{display:flex;align-items:center;gap:12px;padding:11px 14px;background:var(--white);border:0.5px solid var(--border);border-radius:10px;margin-bottom:8px}
+.doc-icon{font-size:22px}
+.doc-name{font-weight:600;font-size:13px}
+.doc-meta{font-size:11px;color:var(--text3)}
+.doc-status{margin-left:auto;font-size:11px;padding:3px 10px;border-radius:6px;font-weight:700;background:var(--green-light);color:var(--green-dark)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(29,106,232,0.4)}50%{box-shadow:0 0 0 8px rgba(29,106,232,0)}}
+.fade-up{animation:fadeUp .35s ease both}
+.fade-up-1{animation-delay:.05s}
+.fade-up-2{animation-delay:.1s}
+.fade-up-3{animation-delay:.15s}
+.fade-up-4{animation-delay:.2s}
+
+/* 2-col layout */
+.two-col{display:grid;grid-template-columns:380px 1fr;gap:18px;align-items:start}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.two-col-eq{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .stat-grid,.portal-grid,.tech-grid,.arch-table,.arch-bottom{grid-template-columns:repeat(2,1fr)}
+  .two-col{grid-template-columns:1fr}
+}
+
+/* Voice-first module */
+.voice-first {
+  background: linear-gradient(135deg, #e8f0fd, #f0e8fd);
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 14px;
+}
+.voice-first h4 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  color: var(--blue-dark);
+}
+.voice-first p {
+  font-size: 12px;
+  color: var(--text2);
+  margin-bottom: 10px;
+}
+.voice-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.voice-result {
+  background: rgba(255,255,255,0.8);
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12px;
+  color: var(--text2);
+  margin-top: 8px;
+  min-height: 34px;
+}
+
+/* Floating chatbot */
+.swasthya-ai-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  color: #fff;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
+  z-index: 1100;
+}
+.swasthya-ai-window {
+  position: fixed;
+  right: 20px;
+  bottom: 90px;
+  width: 340px;
+  max-width: calc(100vw - 24px);
+  height: 440px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: #fff;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.2);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1100;
+}
+.swasthya-ai-window.open { display: flex; }
+.sai-header {
+  background: linear-gradient(135deg, var(--purple), #a855f7);
+  color: #fff;
+  padding: 12px 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sai-header button {
+  border: none;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+}
+.sai-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  background: #f8fafc;
+}
+.sai-msg {
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  margin-bottom: 8px;
+  max-width: 85%;
+}
+.sai-msg.bot {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  color: var(--text);
+}
+.sai-msg.user {
+  margin-left: auto;
+  background: var(--purple);
+  color: #fff;
+}
+.sai-footer {
+  border-top: 1px solid #e2e8f0;
+  padding: 10px;
+  display: flex;
+  gap: 8px;
+  background: #fff;
+}
+.sai-input {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 9px 12px;
+  font-size: 12px;
+}
+.sai-send {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--purple);
+  color: #fff;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">Swasthya<span>Setu</span></span>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showPage('dashboard')">Dashboard</button>
+    <button class="nav-link" onclick="showPage('risk')">Risk Analysis</button>
+    <button class="nav-link" onclick="showPage('scanqr')">Scan QR</button>
+    <button class="nav-link" onclick="showPage('docs')">Upload Documents</button>
+    <button class="nav-link" onclick="showPage('tracking')">Worker Tracking</button>
+  </div>
+  <div class="nav-right">
+    <button class="mock-badge" id="mockBtn" onclick="toggleMock()">Mock: ON</button>
+    <button class="lang-btn">Language EN ▾</button>
+    <button class="logout-btn">Logout</button>
+  </div>
+</nav>
+
+<!-- ==================== DASHBOARD ==================== -->
+<div class="page active" id="page-dashboard">
+  <div class="page-label">Overview</div>
+  <div class="page-title">SwasthyaSetu Dashboard</div>
+
+  <div class="stat-grid">
+    <div class="stat-card fade-up fade-up-1">
+      <div class="stat-val" style="color:var(--blue)">2,847</div>
+      <div class="stat-label">Workers Registered</div>
+      <div class="stat-sub">↑ 124 this month</div>
+    </div>
+    <div class="stat-card fade-up fade-up-2">
+      <div class="stat-val" style="color:var(--red)">342</div>
+      <div class="stat-label">High Risk Workers</div>
+      <div class="stat-sub">Require immediate screening</div>
+    </div>
+    <div class="stat-card fade-up fade-up-3">
+      <div class="stat-val" style="color:var(--green)">1,891</div>
+      <div class="stat-label">Documents Digitized</div>
+      <div class="stat-sub">Via Document AI</div>
+    </div>
+    <div class="stat-card fade-up fade-up-4">
+      <div class="stat-val" style="color:var(--purple)">12</div>
+      <div class="stat-label">States Active</div>
+      <div class="stat-sub">Across India</div>
+    </div>
+  </div>
+
+  <!-- Portal cards like Slide 6 -->
+  <div style="margin-bottom:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px">User Portals</div>
+  <div class="portal-grid" style="margin-bottom:28px">
+    <div class="portal-card fade-up fade-up-1" onclick="showPage('risk')" style="cursor:pointer">
+      <div class="p-icon">📱</div>
+      <div class="portal-badge pb-orange">Mobile App</div>
+      <div class="p-title">Worker Portal</div>
+      <div class="p-sub">QR code access, voice input, health records</div>
+      <div style="margin-top:12px;font-size:11px;color:var(--text3)">Flutter App</div>
+    </div>
+    <div class="portal-card fade-up fade-up-2" style="cursor:pointer">
+      <div class="p-icon">🏥</div>
+      <div class="portal-badge pb-green">ASHA Dashboard</div>
+      <div class="p-title">ASHA Worker</div>
+      <div class="p-sub">Village overview, migrant list, follow-up alerts</div>
+      <div style="margin-top:12px;font-size:11px;color:var(--text3)">Web Dashboard</div>
+    </div>
+    <div class="portal-card fade-up fade-up-3" onclick="showPage('scanqr')" style="cursor:pointer">
+      <div class="p-icon">🩺</div>
+      <div class="portal-badge pb-purple">Doctor Portal</div>
+      <div class="p-title">Healthcare Provider</div>
+      <div class="p-sub">Patient scan, history access, translation</div>
+      <div style="margin-top:12px;font-size:11px;color:var(--text3)">React Web App</div>
+    </div>
+    <div class="portal-card fade-up fade-up-4" style="cursor:pointer">
+      <div class="p-icon">🏗️</div>
+      <div class="portal-badge pb-orange">Employer Portal</div>
+      <div class="p-title">Employer</div>
+      <div class="p-sub">Worker count, health status, compliance</div>
+      <div style="margin-top:12px;font-size:11px;color:var(--text3)">Analytics Dashboard</div>
+    </div>
+  </div>
+
+  <!-- ASHA + Employer side by side -->
+  <div class="two-col-eq">
+    <!-- ASHA Dashboard mini -->
+    <div class="card fade-up">
+      <div class="portal-badge pb-green">ASHA Dashboard</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+        <div style="background:var(--blue-light);border-radius:10px;padding:14px;text-align:center">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;color:var(--blue)">150</div>
+          <div style="font-size:12px;color:var(--text2);font-weight:600">Total</div>
+        </div>
+        <div style="background:var(--orange-light);border-radius:10px;padding:14px;text-align:center">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;color:var(--orange)">45</div>
+          <div style="font-size:12px;color:var(--text2);font-weight:600">Migrated</div>
+        </div>
+      </div>
+      <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Migrant List</div>
+      <div class="worker-row">
+        <div class="worker-avatar" style="background:var(--green-light);color:var(--green-dark)">RK</div>
+        <div><div style="font-weight:600;font-size:13px">Ramesh K.</div><div style="font-size:11px;color:var(--text3)">Stone Quarry · Bengaluru</div></div>
+        <div class="status-dot" style="background:#16a34a"></div>
+      </div>
+      <div class="worker-row">
+        <div class="worker-avatar" style="background:var(--orange-light);color:var(--orange-dark)">SP</div>
+        <div><div style="font-weight:600;font-size:13px">Suresh P.</div><div style="font-size:11px;color:var(--text3)">Textile Mill · Surat</div></div>
+        <div class="status-dot" style="background:#f59e0b"></div>
+      </div>
+      <div class="alert-card" style="margin-top:12px">
+        <div style="font-weight:700;font-size:13px;color:#dc2626;margin-bottom:3px">⚠ Active Alert</div>
+        <div style="font-size:12px;color:#7f1d1d">3 workers returning — schedule follow-up</div>
+      </div>
+    </div>
+
+    <!-- Employer Dashboard mini -->
+    <div class="card fade-up fade-up-2">
+      <div class="portal-badge pb-orange">Employer Portal</div>
+      <div style="background:linear-gradient(135deg,var(--orange),var(--orange-dark));border-radius:12px;padding:16px;text-align:center;margin-bottom:16px">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:42px;font-weight:800;color:#fff;line-height:1">250</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.85);margin-top:4px;font-weight:600">Registered Workers</div>
+      </div>
+      <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Health Status</div>
+      <div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span style="font-weight:600">Healthy</span><span style="color:var(--green);font-weight:700">180</span></div>
+        <div class="compliance-bar"><div class="compliance-fill" style="width:72%"></div></div>
+      </div>
+      <div style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span style="font-weight:600">At Risk</span><span style="color:var(--amber);font-weight:700">50</span></div>
+        <div class="compliance-bar"><div class="compliance-fill" style="width:20%;background:linear-gradient(90deg,var(--amber),#fbbf24)"></div></div>
+      </div>
+      <div style="background:var(--green-light);border-radius:10px;padding:11px 14px;display:flex;align-items:center;gap:10px">
+        <div style="font-size:20px">✅</div>
+        <div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;color:var(--green-dark)">95% Compliant</div>
+          <div style="font-size:11px;color:var(--green-dark);opacity:.8">OSH Code 2020</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== RISK ANALYSIS ==================== -->
+<div class="page" id="page-risk">
+  <div class="page-label">KaamSuraksha AI</div>
+  <div class="page-title">Occupational Risk Analysis</div>
+  <div class="two-col">
+    <!-- Left form -->
+    <div class="card">
+      <div class="portal-badge pb-purple">KaamSuraksha Risk Input</div>
+      <div class="voice-first">
+        <h4 id="voice-first-title">Voice-first Intake</h4>
+        <p id="voice-first-subtitle">Speak in your language and auto-convert to clinic-ready text.</p>
+        <div class="voice-grid">
+          <select id="voice-src-lang">
+            <option>Hindi</option>
+            <option>English</option>
+            <option>Odia</option>
+            <option>Kannada</option>
+            <option>Bengali</option>
+            <option>Tamil</option>
+          </select>
+          <select id="voice-tgt-lang">
+            <option>English</option>
+            <option>Hindi</option>
+            <option>Odia</option>
+            <option>Kannada</option>
+            <option>Bengali</option>
+            <option>Tamil</option>
+          </select>
+        </div>
+        <button class="btn-primary btn-blue" id="voice-toggle-btn" style="margin-top:0">🎤 Start Voice</button>
+        <div class="voice-result" id="voice-transcript">Transcript: –</div>
+        <div class="voice-result" id="voice-translation">Translation: –</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Worker ID</label>
+        <input type="text" id="risk-worker-id" placeholder="UUID worker id" oninput="autofillWorker(this.value)"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Occupation</label>
+        <select id="risk-occ" onchange="updateRiskPreview()">
+          <option>Stone Quarry</option>
+          <option>Construction</option>
+          <option>Textile Mill</option>
+          <option>Coal Mining</option>
+          <option>Chemical Factory</option>
+          <option>Brick Kiln</option>
+          <option>Agriculture</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Years in job: <span id="years-val">8</span></label>
+        <input type="range" min="0" max="30" value="8" id="risk-years" oninput="document.getElementById('years-val').textContent=this.value"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tasks</label>
+        <div class="checkbox-grid">
+          <label class="cb-item checked"><input type="checkbox" checked onchange="toggleCb(this)"> drilling</label>
+          <label class="cb-item checked"><input type="checkbox" checked onchange="toggleCb(this)"> stone_cutting</label>
+          <label class="cb-item"><input type="checkbox" onchange="toggleCb(this)"> sandblasting</label>
+          <label class="cb-item"><input type="checkbox" onchange="toggleCb(this)"> spinning</label>
+          <label class="cb-item"><input type="checkbox" onchange="toggleCb(this)"> weaving</label>
+          <label class="cb-item"><input type="checkbox" onchange="toggleCb(this)"> chemical_mixing</label>
+          <label class="cb-item"><input type="checkbox" onchange="toggleCb(this)"> fume_exposure</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">PPE Usage</label>
+        <select id="risk-ppe">
+          <option>Never</option>
+          <option selected>Rarely</option>
+          <option>Sometimes</option>
+          <option>Always</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Symptoms</label>
+        <div class="checkbox-grid">
+          <label class="cb-item checked"><input type="checkbox" checked onchange="toggleCb(this)"> persistent_cough</label>
+          <label class="cb-item"><input type="checkbox" onchange="toggleCb(this)"> breathlessness</label>
+          <label class="cb-item"><input type="checkbox" onchange="toggleCb(this)"> chest_tightness</label>
+          <label class="cb-item"><input type="checkbox" onchange="toggleCb(this)"> wheeze</label>
+        </div>
+      </div>
+      <button class="btn-primary btn-purple" onclick="analyzeRisk()">🔍 Analyze Occupational Risk</button>
+    </div>
+
+    <!-- Right results -->
+    <div>
+      <!-- Risk card -->
+      <div class="risk-card fade-up" id="risk-card" style="background:var(--green);margin-bottom:16px">
+        <div class="risk-label">Predicted Occupational Risk</div>
+        <div class="risk-pct" id="risk-pct">0%</div>
+        <div class="risk-level" id="risk-lvl">Risk level: LOW</div>
+        <div class="risk-disease" id="risk-dis">Likely disease: –</div>
+      </div>
+
+      <!-- SHAP -->
+      <div class="card" style="margin-bottom:14px">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;margin-bottom:12px">Top SHAP-style Factors</div>
+        <div id="shap-content" style="color:var(--text3);font-size:13px">No factors yet.</div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="card">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;margin-bottom:12px">Recommended Screening</div>
+        <div id="rec-content" style="color:var(--text3);font-size:13px">Run an assessment to generate actions.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SCAN QR ==================== -->
+<div class="page" id="page-scanqr">
+  <div class="page-label">Doctor Portal</div>
+  <div class="page-title">Patient Scan & Medical History</div>
+  <div class="two-col">
+    <div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="portal-badge pb-purple">Patient Scan</div>
+        <div class="qr-area" onclick="simulateScan('SW-100001')">
+          <div class="qr-icon">📷</div>
+          <div style="font-weight:600;font-size:14px">Scan Patient QR Code</div>
+          <div style="font-size:12px;color:var(--text3)">Click camera to simulate scanning SW-100001</div>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:16px">
+          <input type="text" placeholder="Worker ID (e.g. SW-100002)" style="flex:1" id="scan-id" onkeypress="if(event.key==='Enter') simulateScan()"/>
+          <button class="btn-primary" style="width:auto; padding:0 20px" onclick="simulateScan()">Fetch</button>
+        </div>
+        <button class="btn-primary" style="margin-top:10px; background:transparent; color:var(--blue); border:1px solid var(--blue)" onclick="generateQR()">Generate QR Code for this ID</button>
+        <div id="qr-result" style="display:none; text-align:center; padding:16px; margin-top:16px; border:1px dashed var(--border); border-radius:8px"></div>
+      </div>
+      <div class="card">
+        <div class="portal-badge pb-blue">Translation</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <select style="flex:1"><option>Odia</option><option>Hindi</option><option>Bengali</option></select>
+          <span style="font-size:20px;color:var(--text3)">⇄</span>
+          <select style="flex:1"><option>Kannada</option><option>Tamil</option><option>Telugu</option></select>
+        </div>
+        <textarea style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:13px;resize:vertical;min-height:80px;outline:none" placeholder="Type doctor's instructions to translate..."></textarea>
+        <button id="translate-btn" class="btn-primary btn-blue" style="margin-top:8px">Translate Instructions</button>
+      </div>
+    </div>
+    <div>
+      <div class="card" id="patient-record" style="display:none">
+        <div class="portal-badge pb-purple">Medical History</div>
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;padding:14px;background:#f9fafb;border-radius:10px">
+          <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--blue));display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:18px;color:#fff">RK</div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:17px">Ramesh Kumar</div>
+            <div style="font-size:12px;color:var(--text2)">SW-001 · Age 34 · O+ · Karnataka</div>
+            <div style="margin-top:6px;display:inline-flex;align-items:center;gap:6px;background:#fde8e8;color:#c01c1c;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">🔴 CRITICAL RISK — Silicosis</div>
+          </div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Conditions</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+          <span style="background:var(--red-light);color:var(--red);padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700">Silicosis Risk (Stage 1)</span>
+          <span style="background:var(--amber-light);color:var(--amber);padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700">Persistent Cough</span>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Visit History</div>
+        <div class="timeline-entry migration">
+          <div style="flex:1"><div class="tl-city">Karnataka PHC, Bengaluru</div><div class="tl-time">Feb 15, 2024 · Dr. Anitha R.</div></div>
+          <span class="tl-badge tl-b-migration">Latest</span>
+        </div>
+        <div class="timeline-entry">
+          <div style="flex:1"><div class="tl-city">Odisha District Hospital</div><div class="tl-time">Jan 03, 2024 · Dr. Prashant</div></div>
+          <span class="tl-badge tl-b-origin">Origin</span>
+        </div>
+      </div>
+      <div id="scan-placeholder" class="card" style="text-align:center;padding:60px 20px">
+        <div style="font-size:48px;margin-bottom:14px">🩺</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:16px;margin-bottom:6px">No patient loaded</div>
+        <div style="font-size:13px;color:var(--text3)">Scan a QR code or enter Worker ID to view medical history</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== DOCUMENTS ==================== -->
+<div class="page" id="page-docs">
+  <div class="page-label">Document AI</div>
+  <div class="page-title">Upload & Digitize Documents</div>
+  <div class="two-col">
+    <div>
+      <div class="card">
+        <div class="portal-badge pb-blue">Upload Document</div>
+        <div class="upload-zone" onclick="simulateUpload()">
+          <div class="upload-icon">📄</div>
+          <div style="font-weight:700;font-size:15px;margin-bottom:4px">Drop prescription or report here</div>
+          <div style="font-size:13px;color:var(--text3)">JPG, PNG, PDF supported</div>
+          <button class="btn-primary btn-blue" style="width:auto;padding:10px 24px;margin-top:16px">Choose File</button>
+        </div>
+        <div style="margin-top:16px">
+          <div class="form-group">
+            <label class="form-label">Worker ID</label>
+            <input type="text" placeholder="SW-001" id="doc-worker-id"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Document Type</label>
+            <select><option>Prescription</option><option>Lab Report</option><option>Discharge Summary</option><option>X-Ray Report</option></select>
+          </div>
+          <button class="btn-primary btn-blue">⚡ Digitize with OCR</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;margin-bottom:14px">Digitized Records</div>
+        <div class="doc-item">
+          <div class="doc-icon">📋</div>
+          <div style="flex:1"><div class="doc-name">Prescription_RameshK_Feb2024.pdf</div><div class="doc-meta">Extracted: Azithromycin 500mg · Once daily · 5 days</div></div>
+          <span class="doc-status">Digitized ✓</span>
+        </div>
+        <div class="doc-item">
+          <div class="doc-icon">🧪</div>
+          <div style="flex:1"><div class="doc-name">ChestXRay_SW001_Jan2024.jpg</div><div class="doc-meta">Finding: Early stage silicosis pattern detected</div></div>
+          <span class="doc-status">Digitized ✓</span>
+        </div>
+        <div class="doc-item">
+          <div class="doc-icon">📊</div>
+          <div style="flex:1"><div class="doc-name">BloodReport_MeenaD_Mar2024.pdf</div><div class="doc-meta">Extracted: Hb 10.2, WBC 7400, Platelets Normal</div></div>
+          <span class="doc-status" style="background:var(--amber-light);color:var(--amber)">Processing…</span>
+        </div>
+        <div id="upload-result" style="display:none" class="alert-card success" style="margin-top:14px">
+          <div style="font-weight:700;color:var(--green-dark);margin-bottom:4px">✅ Document digitized successfully</div>
+          <div style="font-size:12px;color:var(--green-dark)">Drug: Metformin 500mg · Twice daily · 30 days · Dr. S. Rao</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== WORKER TRACKING ==================== -->
+<div class="page" id="page-tracking">
+  <div class="page-label">SehatSetu</div>
+  <div class="page-title">Worker Location Sync</div>
+  <div class="two-col">
+    <div class="card">
+      <div class="portal-badge pb-green">SehatSetu Location Sync</div>
+      <div class="form-group">
+        <label class="form-label">Worker ID</label>
+        <input type="text" id="track-id" placeholder="Enter Worker ID (try SW-001)" oninput="autofillLocation(this.value)"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">State</label>
+        <input type="text" id="track-state" placeholder="State" value="Maharashtra"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">City</label>
+        <input type="text" id="track-city" placeholder="City" value="Mumbai"/>
+      </div>
+      <div class="two-col-eq">
+        <div class="form-group">
+          <label class="form-label">Latitude</label>
+          <input type="text" id="track-lat" value="19.0760"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Longitude</label>
+          <input type="text" id="track-lng" value="72.8777"/>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="saveLocation()">📍 Save Location</button>
+    </div>
+
+    <div>
+      <div class="card">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;margin-bottom:14px">Location Timeline</div>
+        <div id="timeline-list">
+          <div class="timeline-entry">
+            <div style="flex:1">
+              <div class="tl-city">Bhubaneswar, Odisha</div>
+              <div class="tl-time">Jan 15, 2024 · 08:30 AM</div>
+            </div>
+            <span class="tl-badge tl-b-origin">Origin</span>
+          </div>
+          <div class="timeline-entry migration">
+            <div style="flex:1">
+              <div class="tl-city">Bengaluru, Karnataka</div>
+              <div class="tl-time">Feb 01, 2024 · 06:00 AM</div>
+            </div>
+            <span class="tl-badge tl-b-migration">Migration</span>
+          </div>
+          <div class="timeline-entry update">
+            <div style="flex:1">
+              <div class="tl-city">Mumbai, Maharashtra</div>
+              <div class="tl-time">Mar 10, 2024 · 11:45 AM</div>
+            </div>
+            <span class="tl-badge tl-b-update">Update</span>
+          </div>
+        </div>
+        <!-- Map placeholder -->
+        <div style="margin-top:16px;height:180px;background:linear-gradient(135deg,#e8f4f8,#dbeafe);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1px dashed #bfdbfe">
+          <div style="font-size:32px">🗺️</div>
+          <div style="font-weight:700;font-size:14px;color:var(--blue-dark)">Interactive Map</div>
+          <div style="font-size:12px;color:var(--text3)">India worker migration map · Coming soon</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="swasthya-ai-btn" id="swasthya-ai-btn" title="Swasthya AI">✨</button>
+<div class="swasthya-ai-window" id="swasthya-ai-window">
+  <div class="sai-header">
+    <span id="chat-title">Swasthya AI Assistant</span>
+    <button id="sai-close-btn" aria-label="Close chatbot">×</button>
+  </div>
+  <div class="sai-body" id="sai-body">
+    <div class="sai-msg bot" id="chat-welcome-msg">Namaste! Ask me about risk analysis, QR scan, documents, or voice support.</div>
+  </div>
+  <div class="sai-footer">
+    <input class="sai-input" id="sai-input" placeholder="Type your question..." />
+    <button class="sai-send" id="sai-send-btn">➤</button>
+  </div>
+</div>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script>
+let mockOn = true;
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const map = { dashboard: 0, risk: 1, scanqr: 2, docs: 3, tracking: 4 };
+  document.querySelectorAll('.nav-link')[map[id]].classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function toggleCb(el) {
+  el.closest('.cb-item').classList.toggle('checked', el.checked);
+}
+
+function toggleMock() {
+  mockOn = !mockOn;
+  const btn = document.getElementById('mockBtn');
+  const onText = typeof getText === 'function' ? getText('mockOn') : 'Mock: ON';
+  const offText = typeof getText === 'function' ? getText('mockOff') : 'Mock: OFF';
+  btn.textContent = mockOn ? onText : offText;
+  btn.className = mockOn ? 'mock-badge' : 'mock-badge off';
+}
+
+const DISEASE_MAP = {
+  'Stone Quarry': 'Silicosis', 'Construction': 'Silicosis', 'Textile Mill': 'Byssinosis',
+  'Coal Mining': 'CWP (Coal Workers Pneumoconiosis)', 'Chemical Factory': 'Occupational Asthma',
+  'Brick Kiln': 'Heat Stroke Risk', 'Agriculture': 'Pesticide Poisoning Risk'
+};
+const REC_MAP = {
+  'Stone Quarry': ['Chest X-ray immediately', 'Spirometry test', 'Refer to occupational specialist', 'N95 respirator daily'],
+  'Textile Mill': ['Pulmonary function test', 'Avoid cotton dust', 'Use dust mask always'],
+  'Coal Mining': ['Chest X-ray', 'HRCT scan', 'Pulmonary rehab program', 'Annual screening'],
+  'Chemical Factory': ['Skin + respiratory allergy tests', 'Avoid direct chemical contact'],
+  'Construction': ['Chest X-ray', 'Spirometry', 'PPE compliance check'],
+  'Brick Kiln': ['Heat stress assessment', 'Hydration monitoring', 'Regular rest breaks'],
+  'Agriculture': ['Blood cholinesterase test', 'Avoid pesticide direct contact'],
+};
+
+function analyzeRisk() {
+  if (mockOn) {
+    const occ = document.getElementById('risk-occ').value;
+    const years = parseInt(document.getElementById('risk-years').value);
+    const tasks = [...document.querySelectorAll('#page-risk .cb-item.checked input')].map(i => i.parentElement.textContent.trim()).filter(t => ['drilling','stone_cutting','sandblasting','spinning','weaving','chemical_mixing','fume_exposure'].includes(t));
+    const ppe = document.getElementById('risk-ppe').value;
+    const symptoms = [...document.querySelectorAll('#page-risk .cb-item.checked input')].map(i => i.parentElement.textContent.trim()).filter(t => ['persistent_cough','breathlessness','chest_tightness','wheeze'].includes(t));
+
+    const occRisk = {'Stone Quarry':35,'Construction':25,'Textile Mill':30,'Coal Mining':38,'Chemical Factory':28,'Brick Kiln':20,'Agriculture':15};
+    let score = (occRisk[occ] || 5) + Math.min(years * 3, 25);
+    const riskTasks = ['drilling','stone_cutting','sandblasting','chemical_mixing','fume_exposure'];
+    score += tasks.filter(t => riskTasks.includes(t)).length * 6;
+    const ppeMap = {'Never':15,'Rarely':12,'Sometimes':6,'Always':0};
+    score += ppeMap[ppe] || 0;
+    const symMap = {'persistent_cough':8,'breathlessness':10,'chest_tightness':7,'wheeze':6};
+    symptoms.forEach(s => { score += symMap[s] || 0; });
+    score = Math.min(score, 100);
+
+    const level = score >= 70 ? 'CRITICAL' : score >= 50 ? 'HIGH' : score >= 30 ? 'MEDIUM' : 'LOW';
+    const color = score >= 70 ? '#c01414' : score >= 50 ? '#d97706' : score >= 30 ? '#1d6ae8' : '#1a9e5c';
+    const disease = DISEASE_MAP[occ] || 'Occupational Disease';
+    const recs = REC_MAP[occ] || ['Consult occupational health doctor', 'Annual health checkup'];
+
+    // Animate risk card
+    const card = document.getElementById('risk-card');
+    card.style.background = color;
+    animateNumber('risk-pct', 0, score, '%', 800);
+    document.getElementById('risk-lvl').textContent = `${getText('riskLevelPrefix')}${level}`;
+    document.getElementById('risk-dis').textContent = `${getText('likelyDiseasePrefix')}${score > 10 ? disease : '–'}`;
+
+    // SHAP factors
+    const factors = [
+      { label: `Occupation: ${occ}`, impact: occRisk[occ] || 5 },
+      { label: `${years} years in job`, impact: Math.min(years * 3, 25) },
+      { label: `PPE Usage: ${ppe}`, impact: ppeMap[ppe] || 0 },
+    ].filter(f => f.impact > 0).sort((a, b) => b.impact - a.impact).slice(0, 3);
+
+    const shapHTML = factors.map(f => `
+      <div style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px">
+          <span style="font-weight:600">${f.label}</span>
+          <span style="color:${color};font-weight:700">+${f.impact}%</span>
+        </div>
+        <div style="height:8px;background:#f3f4f6;border-radius:4px;overflow:hidden">
+          <div style="height:100%;width:${Math.round((f.impact/40)*100)}%;background:${color};border-radius:4px;transition:width .8s ease"></div>
+        </div>
+      </div>`).join('');
+    document.getElementById('shap-content').innerHTML = shapHTML;
+
+    // Recommendations
+    document.getElementById('rec-content').innerHTML = recs.map(r =>
+      `<div style="display:flex;gap:10px;align-items:center;padding:9px 12px;border-radius:8px;border:0.5px solid var(--border);margin-bottom:7px;background:#fafafa;font-size:13px"><span style="color:var(--green);font-weight:800;font-size:15px">→</span><span>${r}</span></div>`
+    ).join('');
+  }
+}
+
+function animateNumber(id, from, to, suffix, duration) {
+  const el = document.getElementById(id);
+  const start = performance.now();
+  function step(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.round(from + (to - from) * ease) + suffix;
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function autofillWorker(v) {
+  if (v === 'SW-001') {
+    document.getElementById('risk-occ').value = 'Stone Quarry';
+    document.getElementById('risk-years').value = 8;
+    document.getElementById('years-val').textContent = '8';
+    document.getElementById('risk-ppe').value = 'Rarely';
+  }
+}
+
+function simulateScan(explicitId) {
+  let inputId = document.getElementById('scan-id').value.trim();
+  let idToUse = explicitId && typeof explicitId === 'string' ? explicitId : (inputId || 'SW-001');
+  document.getElementById('scan-id').value = idToUse;
+  showPatient();
+}
+
+function showPatient() {
+  document.getElementById('patient-record').style.display = 'block';
+  document.getElementById('scan-placeholder').style.display = 'none';
+}
+
+function simulateUpload() {
+  setTimeout(() => {
+    document.getElementById('upload-result').style.display = 'block';
+  }, 1200);
+}
+
+const LOCATION_DATA = {
+  'SW-001': { state: 'Karnataka', city: 'Bengaluru', lat: '12.9716', lng: '77.5946' },
+  'SW-002': { state: 'Gujarat', city: 'Surat', lat: '21.1702', lng: '72.8311' },
+  'SW-003': { state: 'Delhi', city: 'New Delhi', lat: '28.6139', lng: '77.2090' },
+};
+
+function autofillLocation(v) {
+  const d = LOCATION_DATA[v];
+  if (d) {
+    document.getElementById('track-state').value = d.state;
+    document.getElementById('track-city').value = d.city;
+    document.getElementById('track-lat').value = d.lat;
+    document.getElementById('track-lng').value = d.lng;
+  }
+}
+
+function saveLocation() {
+  const id = document.getElementById('track-id').value || '–';
+  const city = document.getElementById('track-city').value || '–';
+  const state = document.getElementById('track-state').value || '–';
+  if (!id || !city || !state) { alert('Please fill Worker ID, State, and City'); return; }
+  const now = new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+  const entry = document.createElement('div');
+  entry.className = 'timeline-entry update fade-up';
+  entry.innerHTML = `<div style="flex:1"><div class="tl-city">${city}, ${state}</div><div class="tl-time">${now} · Just now</div></div><span class="tl-badge tl-b-update">Live Update</span>`;
+  const list = document.getElementById('timeline-list');
+  list.insertBefore(entry, list.firstChild);
+}
+
+function updateRiskPreview() {}
+</script>
+
+<!-- ==================== BACKEND API INTEGRATION ==================== -->
+<script>
+/**
+ * SwasthyaSetu Backend Integration Layer
+ * Enhances existing mock functions to call real FastAPI backend when Mock: OFF
+ * Backend: http://localhost:8000/api/v1
+ * All existing code above is untouched.
+ */
+
+const API_BASE = 'http://localhost:8000/api/v1';
+let authToken = localStorage.getItem('ss_token') || null;
+
+// ── API Helper ──
+async function apiFetch(path, opts = {}) {
+  const mockSuffix = mockOn ? '?mock=true' : '';
+  const url = `${API_BASE}${path}${mockSuffix}`;
+  const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
+  if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
+  try {
+    const res = await fetch(url, { ...opts, headers });
+    if (!res.ok) throw new Error(`API ${res.status}: ${await res.text()}`);
+    if (res.status === 204) return null;
+    return await res.json();
+  } catch (err) {
+    console.warn(`[API] ${path} failed:`, err.message);
+    return null;
+  }
+}
+
+// ── Auto-login on load (use Ramesh as default demo user) ──
+async function autoLogin() {
+  if (authToken) return;
+  const data = await apiFetch('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({ email: 'ramesh.k@swasthya.in', password: 'Demo@2025' }),
+  });
+  if (data && data.access_token) {
+    authToken = data.access_token;
+    localStorage.setItem('ss_token', authToken);
+    console.log('[Auth] Logged in as', data.user?.name || 'demo user');
+  }
+}
+
+// ── Override: analyzeRisk → calls POST /kaamsuraksha/score when mock OFF ──
+const _originalAnalyzeRisk = analyzeRisk;
+analyzeRisk = async function() {
+  if (mockOn) { _originalAnalyzeRisk(); return; }
+
+  const occ = document.getElementById('risk-occ').value;
+  const years = parseInt(document.getElementById('risk-years').value);
+  const allCheckboxes = [...document.querySelectorAll('#page-risk .cb-item.checked input')];
+  const allLabels = allCheckboxes.map(i => i.parentElement.textContent.trim());
+  const taskOptions = ['drilling','stone_cutting','sandblasting','spinning','weaving','chemical_mixing','fume_exposure'];
+  const symOptions = ['persistent_cough','breathlessness','chest_tightness','wheeze'];
+  const tasks = allLabels.filter(t => taskOptions.includes(t));
+  const symptoms = allLabels.filter(t => symOptions.includes(t));
+  const ppe = document.getElementById('risk-ppe').value;
+  const workerId = document.getElementById('risk-worker-id').value || 'a1000001-0001-4000-8000-000000000001';
+
+  const occMap = { 'Stone Quarry':'stone_quarry','Construction':'construction_worker',
+    'Textile Mill':'textile_mill_worker','Coal Mining':'miner',
+    'Chemical Factory':'chemical_factory','Brick Kiln':'brick_kiln','Agriculture':'agriculture' };
+
+  const payload = {
+    worker_id: workerId,
+    occupation: occMap[occ] || occ.toLowerCase().replace(/ /g,'_'),
+    years_in_job: years,
+    tasks: tasks,
+    ppe_usage: ppe.toLowerCase(),
+    symptoms: symptoms,
+  };
+
+  const data = await apiFetch('/kaamsuraksha/score', { method: 'POST', body: JSON.stringify(payload) });
+
+  if (data) {
+    const topScore = Math.max(data.silicosis || 0, data.byssinosis || 0, data.occupational_asthma || 0);
+    const score = Math.round(topScore * 100);
+    const level = data.risk_level || 'LOW';
+    const color = level === 'HIGH' ? '#c01414' : level === 'MEDIUM' ? '#d97706' : '#1a9e5c';
+    const disease = data.predicted_disease || '–';
+
+    document.getElementById('risk-card').style.background = color;
+    animateNumber('risk-pct', 0, score, '%', 800);
+    document.getElementById('risk-lvl').textContent = `${getText('riskLevelPrefix')}${level}`;
+    document.getElementById('risk-dis').textContent = `${getText('likelyDiseasePrefix')}${disease}`;
+
+    // SHAP factors from API
+    if (data.top_factors && data.top_factors.length) {
+      document.getElementById('shap-content').innerHTML = data.top_factors.map(f => `
+        <div style="margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px">
+            <span style="font-weight:600">${f.feature}: ${f.value}</span>
+            <span style="color:${color};font-weight:700">+${Math.round(f.impact*100)}%</span>
+          </div>
+          <div style="height:8px;background:#f3f4f6;border-radius:4px;overflow:hidden">
+            <div style="height:100%;width:${Math.round(f.impact*100)}%;background:${color};border-radius:4px;transition:width .8s ease"></div>
+          </div>
+        </div>`).join('');
+    }
+
+    // Recommendations from API
+    if (data.recommendations && data.recommendations.length) {
+      document.getElementById('rec-content').innerHTML = data.recommendations.map(r =>
+        `<div style="display:flex;gap:10px;align-items:center;padding:9px 12px;border-radius:8px;border:0.5px solid var(--border);margin-bottom:7px;background:#fafafa;font-size:13px"><span style="color:var(--green);font-weight:800;font-size:15px">→</span><span>${r}</span></div>`
+      ).join('');
+    }
+  } else {
+    // Fallback to mock logic
+    _originalAnalyzeRisk();
+  }
+};
+
+// ── Override: saveLocation → calls POST /tracking/location when mock OFF ──
+const _originalSaveLocation = saveLocation;
+saveLocation = async function() {
+  const id = document.getElementById('track-id').value || '';
+  const city = document.getElementById('track-city').value || '';
+  const state = document.getElementById('track-state').value || '';
+  const lat = document.getElementById('track-lat').value || '';
+  const lng = document.getElementById('track-lng').value || '';
+
+  if (!id || !city || !state) { alert('Please fill Worker ID, State, and City'); return; }
+
+  if (!mockOn) {
+    const data = await apiFetch('/tracking/location', {
+      method: 'POST',
+      body: JSON.stringify({ worker_id: id, state, city, latitude: lat, longitude: lng, source: 'manual' }),
+    });
+    if (data) console.log('[API] Location saved:', data.id);
+  }
+
+  // Always update UI (same as original)
+  const now = new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+  const entry = document.createElement('div');
+  entry.className = 'timeline-entry update fade-up';
+  entry.innerHTML = `<div style="flex:1"><div class="tl-city">${city}, ${state}</div><div class="tl-time">${now} · Just now</div></div><span class="tl-badge tl-b-update">${mockOn?'Mock':'Live'} Update</span>`;
+  const list = document.getElementById('timeline-list');
+  list.insertBefore(entry, list.firstChild);
+};
+
+// ── Override: simulateScan → fetches real patient record when mock OFF ──
+const _originalSimulateScan = simulateScan;
+simulateScan = async function(explicitId) {
+  let inputId = document.getElementById('scan-id').value.trim();
+  let searchId = explicitId && typeof explicitId === 'string' ? explicitId : (inputId || 'SW-100001');
+  document.getElementById('scan-id').value = searchId;
+
+  if (!mockOn) {
+    const record = await apiFetch(`/identity/${searchId}/record`);
+    if (record && record.worker) {
+      const w = record.worker;
+      const initials = w.name.split(' ').map(n=>n[0]).join('');
+
+      // Build dynamic patient card
+      const conditions = (w.recent_diagnoses || []).map(d =>
+        `<span style="background:var(--red-light);color:var(--red);padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700">${d}</span>`
+      ).join('');
+
+      const visits = (record.health_records || []).map((hr, i) => {
+        const cls = i === 0 ? 'timeline-entry migration' : 'timeline-entry';
+        const badge = i === 0 ? '<span class="tl-badge tl-b-migration">Latest</span>' : '<span class="tl-badge tl-b-origin">Previous</span>';
+        const summary = hr.data_json?.summary || hr.data_json?.facility || hr.record_type;
+        const date = new Date(hr.created_at).toLocaleDateString('en-IN', {dateStyle:'medium'});
+        return `<div class="${cls}"><div style="flex:1"><div class="tl-city">${summary}</div><div class="tl-time">${date}</div></div>${badge}</div>`;
+      }).join('');
+
+      const riskBadge = (record.occupational_risk && record.occupational_risk.length)
+        ? `<div style="margin-top:6px;display:inline-flex;align-items:center;gap:6px;background:#fde8e8;color:#c01c1c;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">🔴 ${record.occupational_risk[0].risk_level} RISK</div>`
+        : '';
+
+      document.getElementById('patient-record').innerHTML = `
+        <div class="portal-badge pb-purple">Medical History</div>
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;padding:14px;background:#f9fafb;border-radius:10px">
+          <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--blue));display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:18px;color:#fff">${initials}</div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:17px">${w.name}</div>
+            <div style="font-size:12px;color:var(--text2)">${w.swasthya_id || ''} · Age ${w.age||'?'} · ${w.blood_type||'?'} · ${w.state||''}</div>
+            ${riskBadge}
+          </div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Conditions</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">${conditions || '<span style="color:var(--text3);font-size:12px">No conditions recorded</span>'}</div>
+        <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Visit History</div>
+        ${visits || '<div style="color:var(--text3);font-size:13px">No visits recorded</div>'}
+      `;
+    }
+  }
+
+  showPatient();
+};
+
+// ── Override: autofillWorker → supports seed worker IDs ──
+const _originalAutofillWorker = autofillWorker;
+autofillWorker = function(v) {
+  const workers = {
+    'SW-100001': { occ: 'Stone Quarry',   years: 12, ppe: 'Rarely',    id: 'a1000001-0001-4000-8000-000000000001' },
+    'SW-100002': { occ: 'Construction',    years: 6,  ppe: 'Sometimes', id: 'a1000001-0002-4000-8000-000000000002' },
+    'SW-100003': { occ: 'Agriculture',     years: 4,  ppe: 'Never',     id: 'a1000001-0003-4000-8000-000000000003' },
+    'SW-001':    { occ: 'Stone Quarry',    years: 8,  ppe: 'Rarely',    id: '' },
+  };
+  const w = workers[v];
+  if (w) {
+    document.getElementById('risk-occ').value = w.occ;
+    document.getElementById('risk-years').value = w.years;
+    document.getElementById('years-val').textContent = w.years;
+    document.getElementById('risk-ppe').value = w.ppe;
+    if (w.id) document.getElementById('risk-worker-id').value = w.id;
+  }
+};
+
+// ── Override: autofillLocation → supports seed worker IDs ──
+const _originalAutofillLocation = autofillLocation;
+autofillLocation = function(v) {
+  const locs = {
+    'SW-100001': { state: 'Karnataka', city: 'Bengaluru', lat: '12.9716', lng: '77.5946' },
+    'SW-100002': { state: 'Karnataka', city: 'Bengaluru', lat: '12.9352', lng: '77.6245' },
+    'SW-100003': { state: 'Karnataka', city: 'Bengaluru', lat: '12.9141', lng: '77.6411' },
+    'SW-001':    { state: 'Karnataka', city: 'Bengaluru', lat: '12.9716', lng: '77.5946' },
+    'SW-002':    { state: 'Gujarat',   city: 'Surat',     lat: '21.1702', lng: '72.8311' },
+    'SW-003':    { state: 'Delhi',     city: 'New Delhi',  lat: '28.6139', lng: '77.2090' },
+  };
+  const d = locs[v];
+  if (d) {
+    document.getElementById('track-state').value = d.state;
+    document.getElementById('track-city').value = d.city;
+    document.getElementById('track-lat').value = d.lat;
+    document.getElementById('track-lng').value = d.lng;
+  }
+};
+
+// ── Load employer dashboard data from API on page show ──
+const _originalShowPage = showPage;
+showPage = async function(id) {
+  _originalShowPage(id);
+
+  // Fetch employer dashboard data when navigating to dashboard
+  if (id === 'dashboard' && !mockOn) {
+    const emp = await apiFetch('/kaamsuraksha/employer/dashboard/b2000001-0001-4000-8000-000000000010');
+    if (emp) {
+      // Update stat cards with real data
+      const statVals = document.querySelectorAll('.stat-val');
+      if (statVals[0]) statVals[0].textContent = emp.total_workers?.toLocaleString() || '250';
+      if (statVals[1]) statVals[1].textContent = emp.health_status?.critical?.toString() || '20';
+    }
+  }
+};
+
+// ── 1. Language toggle handler ──
+const LANGS = ['EN', 'HI'];
+let langIdx = 0;
+let currentLang = LANGS[langIdx];
+
+const UI_TEXT = {
+  EN: {
+    languageLabel: 'Language',
+    mockOn: 'Mock: ON',
+    mockOff: 'Mock: OFF',
+    logout: 'Logout',
+    navDashboard: 'Dashboard',
+    navRisk: 'Risk Analysis',
+    navScan: 'Scan QR',
+    navDocs: 'Upload Documents',
+    navTracking: 'Worker Tracking',
+    dashboardPageLabel: 'Overview',
+    dashboardPageTitle: 'SwasthyaSetu Dashboard',
+    riskPageLabel: 'KaamSuraksha AI',
+    riskPageTitle: 'Occupational Risk Analysis',
+    riskInputTitle: 'KaamSuraksha Risk Input',
+    scanPageLabel: 'Doctor Portal',
+    scanPageTitle: 'Patient Scan & Medical History',
+    docsPageLabel: 'Document AI',
+    docsPageTitle: 'Upload & Digitize Documents',
+    trackingPageLabel: 'SehatSetu',
+    trackingPageTitle: 'Worker Location Sync',
+    voiceFirstTitle: 'Voice-first Intake',
+    voiceFirstSubtitle: 'Speak in your language and auto-convert to clinic-ready text.',
+    voiceStart: '🎤 Start Voice',
+    voiceStop: '⏹ Stop Voice',
+    transcriptPrefix: 'Transcript: ',
+    translationPrefix: 'Translation: ',
+    translateButton: 'Translate Instructions',
+    translateBusy: 'Translating...',
+    translateEmptyAlert: 'Please type instructions to translate.',
+    translatedResult: 'Translated',
+    translatedBy: 'Powered by Swasthya AI',
+    chatWelcome: 'Namaste! Ask me about risk analysis, QR scan, documents, or voice support.',
+    chatbotTitle: 'Swasthya AI Assistant',
+    chatbotInput: 'Type your question...',
+    riskLevelPrefix: 'Risk level: ',
+    likelyDiseasePrefix: 'Likely disease: ',
+  },
+  HI: {
+    languageLabel: 'भाषा',
+    mockOn: 'मॉक: चालू',
+    mockOff: 'मॉक: बंद',
+    logout: 'लॉगआउट',
+    navDashboard: 'डैशबोर्ड',
+    navRisk: 'जोखिम विश्लेषण',
+    navScan: 'QR स्कैन',
+    navDocs: 'दस्तावेज़ अपलोड',
+    navTracking: 'वर्कर ट्रैकिंग',
+    dashboardPageLabel: 'ओवरव्यू',
+    dashboardPageTitle: 'स्वास्थ्यसेतु डैशबोर्ड',
+    riskPageLabel: 'कामसुरक्षा AI',
+    riskPageTitle: 'व्यावसायिक जोखिम विश्लेषण',
+    riskInputTitle: 'कामसुरक्षा जोखिम इनपुट',
+    scanPageLabel: 'डॉक्टर पोर्टल',
+    scanPageTitle: 'रोगी स्कैन और मेडिकल हिस्ट्री',
+    docsPageLabel: 'डॉक्यूमेंट AI',
+    docsPageTitle: 'दस्तावेज़ अपलोड और डिजिटाइज़',
+    trackingPageLabel: 'सेहतसेतु',
+    trackingPageTitle: 'वर्कर लोकेशन सिंक',
+    voiceFirstTitle: 'वॉइस-फर्स्ट इनटेक',
+    voiceFirstSubtitle: 'अपनी भाषा में बोलें और क्लिनिक टेक्स्ट में तुरंत बदलें।',
+    voiceStart: '🎤 रिकॉर्डिंग शुरू करें',
+    voiceStop: '⏹ रिकॉर्डिंग रोकें',
+    transcriptPrefix: 'ट्रांसक्रिप्ट: ',
+    translationPrefix: 'अनुवाद: ',
+    translateButton: 'निर्देश अनुवाद करें',
+    translateBusy: 'अनुवाद हो रहा है...',
+    translateEmptyAlert: 'कृपया अनुवाद के लिए टेक्स्ट लिखें।',
+    translatedResult: 'अनुवादित',
+    translatedBy: 'स्वास्थ्य AI द्वारा संचालित',
+    chatWelcome: 'नमस्ते! जोखिम विश्लेषण, QR स्कैन, दस्तावेज़ या वॉइस सपोर्ट के बारे में पूछें।',
+    chatbotTitle: 'स्वास्थ्य AI सहायक',
+    chatbotInput: 'अपना प्रश्न लिखें...',
+    riskLevelPrefix: 'जोखिम स्तर: ',
+    likelyDiseasePrefix: 'संभावित बीमारी: ',
+  },
+};
+
+function getText(key) {
+  return (UI_TEXT[currentLang] || UI_TEXT.EN)[key] || key;
+}
+
+function applyLanguage(langCode) {
+  currentLang = langCode;
+  document.querySelector('.lang-btn').textContent = `${getText('languageLabel')} ${langCode} ▾`;
+
+  const mockBtn = document.getElementById('mockBtn');
+  if (mockBtn) mockBtn.textContent = mockOn ? getText('mockOn') : getText('mockOff');
+  const logoutBtn = document.querySelector('.logout-btn');
+  if (logoutBtn) logoutBtn.textContent = getText('logout');
+
+  const nav = document.querySelectorAll('.nav-link');
+  if (nav[0]) nav[0].textContent = getText('navDashboard');
+  if (nav[1]) nav[1].textContent = getText('navRisk');
+  if (nav[2]) nav[2].textContent = getText('navScan');
+  if (nav[3]) nav[3].textContent = getText('navDocs');
+  if (nav[4]) nav[4].textContent = getText('navTracking');
+
+  const dashboardPage = document.getElementById('page-dashboard');
+  if (dashboardPage) {
+    const label = dashboardPage.querySelector('.page-label');
+    const title = dashboardPage.querySelector('.page-title');
+    if (label) label.textContent = getText('dashboardPageLabel');
+    if (title) title.textContent = getText('dashboardPageTitle');
+  }
+
+  const riskPage = document.getElementById('page-risk');
+  if (riskPage) {
+    const label = riskPage.querySelector('.page-label');
+    const title = riskPage.querySelector('.page-title');
+    const inputTitle = riskPage.querySelector('.portal-badge');
+    if (label) label.textContent = getText('riskPageLabel');
+    if (title) title.textContent = getText('riskPageTitle');
+    if (inputTitle) inputTitle.textContent = getText('riskInputTitle');
+  }
+
+  const scanPage = document.getElementById('page-scanqr');
+  if (scanPage) {
+    const label = scanPage.querySelector('.page-label');
+    const title = scanPage.querySelector('.page-title');
+    if (label) label.textContent = getText('scanPageLabel');
+    if (title) title.textContent = getText('scanPageTitle');
+  }
+
+  const docsPage = document.getElementById('page-docs');
+  if (docsPage) {
+    const label = docsPage.querySelector('.page-label');
+    const title = docsPage.querySelector('.page-title');
+    if (label) label.textContent = getText('docsPageLabel');
+    if (title) title.textContent = getText('docsPageTitle');
+  }
+
+  const trackingPage = document.getElementById('page-tracking');
+  if (trackingPage) {
+    const label = trackingPage.querySelector('.page-label');
+    const title = trackingPage.querySelector('.page-title');
+    if (label) label.textContent = getText('trackingPageLabel');
+    if (title) title.textContent = getText('trackingPageTitle');
+  }
+
+  const vfTitle = document.getElementById('voice-first-title');
+  const vfSubtitle = document.getElementById('voice-first-subtitle');
+  const vfBtn = document.getElementById('voice-toggle-btn');
+  const transcript = document.getElementById('voice-transcript');
+  const translation = document.getElementById('voice-translation');
+  const chatTitle = document.getElementById('chat-title');
+  const chatInput = document.getElementById('sai-input');
+  const chatWelcome = document.getElementById('chat-welcome-msg');
+  const translateBtn = document.getElementById('translate-btn');
+  if (vfTitle) vfTitle.textContent = getText('voiceFirstTitle');
+  if (vfSubtitle) vfSubtitle.textContent = getText('voiceFirstSubtitle');
+  if (vfBtn && vfBtn.dataset.recording !== '1') vfBtn.textContent = getText('voiceStart');
+  if (translateBtn && translateBtn.dataset.loading !== '1') translateBtn.textContent = getText('translateButton');
+  if (transcript) {
+    const transcriptValue = transcript.dataset.value || '–';
+    transcript.textContent = `${getText('transcriptPrefix')}${transcriptValue}`;
+  }
+  if (translation) {
+    const translationValue = translation.dataset.value || '–';
+    translation.textContent = `${getText('translationPrefix')}${translationValue}`;
+  }
+  const riskLevelLine = document.getElementById('risk-lvl');
+  if (riskLevelLine) {
+    const levelValue = (riskLevelLine.textContent.split(':').slice(1).join(':').trim() || 'LOW');
+    riskLevelLine.textContent = `${getText('riskLevelPrefix')}${levelValue}`;
+  }
+  const riskDiseaseLine = document.getElementById('risk-dis');
+  if (riskDiseaseLine) {
+    const diseaseValue = (riskDiseaseLine.textContent.split(':').slice(1).join(':').trim() || '–');
+    riskDiseaseLine.textContent = `${getText('likelyDiseasePrefix')}${diseaseValue}`;
+  }
+  if (chatTitle) chatTitle.textContent = getText('chatbotTitle');
+  if (chatInput) chatInput.placeholder = getText('chatbotInput');
+  if (chatWelcome) chatWelcome.textContent = getText('chatWelcome');
+}
+
+document.querySelector('.lang-btn').addEventListener('click', function() {
+  langIdx = (langIdx + 1) % LANGS.length;
+  applyLanguage(LANGS[langIdx]);
+  console.log('[Lang] Switched to', LANGS[langIdx]);
+});
+
+// ── 2. Translate Instructions handler ──
+(function() {
+  const scanPage = document.getElementById('page-scanqr');
+  if (!scanPage) return;
+  const translateBtn = document.getElementById('translate-btn');
+  if (!translateBtn) return;
+
+  const textarea = scanPage.querySelector('textarea');
+  const srcSelect = scanPage.querySelectorAll('select')[0];
+  const tgtSelect = scanPage.querySelectorAll('select')[1];
+  const codeMap = { English: 'en', Hindi: 'hi', Odia: 'or', Kannada: 'kn', Bengali: 'bn', Tamil: 'ta', Telugu: 'te' };
+  const fallbackMap = {
+    'Odia-Kannada': 'ಮಾತ್ರೆಯನ್ನು ಊಟದ ನಂತರ ದಿನಕ್ಕೆ ಎರಡು ಬಾರಿ ತೆಗೆದುಕೊಳ್ಳಿ',
+    'Odia-Tamil': 'மாத்திரையை உணவுக்குப் பிறகு ஒரு நாளைக்கு இரண்டு முறை எடுத்துக்கொள்ளுங்கள்',
+    'Odia-Telugu': 'మాత్ర భోజనం తర్వాత రోజుకు రెండు సార్లు తీసుకోండి',
+    'Hindi-Kannada': 'ಔಷಧವನ್ನು ಊಟದ ನಂತರ ದಿನಕ್ಕೆ ಎರಡು ಬಾರಿ ತೆಗೆದುಕೊಳ್ಳಿ',
+    'Hindi-Tamil': 'மருந்தை சாப்பிட்ட பிறகு ஒரு நாளைக்கு இரு முறை எடுங்கள்',
+    'Hindi-Telugu': 'దవాఖానం తర్వాత రోజుకు రెండు సార్లు తీసుకోండి',
+    'Bengali-Kannada': 'ঔষধ খাবারের পরে দিনে দুবার নিন → ಔಷಧವನ್ನು ಊಟದ ನಂತರ ತೆಗೆದುಕೊಳ್ಳಿ',
+  };
+
+  translateBtn.addEventListener('click', async function() {
+    const text = textarea ? textarea.value.trim() : '';
+    if (!text) {
+      alert(getText('translateEmptyAlert'));
+      return;
+    }
+
+    const src = srcSelect ? srcSelect.value : 'Odia';
+    const tgt = tgtSelect ? tgtSelect.value : 'Kannada';
+    this.disabled = true;
+    this.dataset.loading = '1';
+    this.textContent = getText('translateBusy');
+
+    const api = await apiFetch('/voice/process', {
+      method: 'POST',
+      body: JSON.stringify({
+        text,
+        source_language: codeMap[src] || 'en',
+        target_language: codeMap[tgt] || 'en',
+      }),
+    });
+
+    const translated = api?.translated_text || fallbackMap[`${src}-${tgt}`] || `[${tgt}] ${text}`;
+
+    let resultDiv = scanPage.querySelector('#translate-result');
+    if (!resultDiv) {
+      resultDiv = document.createElement('div');
+      resultDiv.id = 'translate-result';
+      this.parentElement.appendChild(resultDiv);
+    }
+    resultDiv.className = 'alert-card success';
+    resultDiv.style.marginTop = '12px';
+    resultDiv.innerHTML = `
+      <div style="font-weight:700;color:var(--green-dark);margin-bottom:4px">✅ ${getText('translatedResult')} (${src} → ${tgt})</div>
+      <div style="font-size:13px;color:var(--green-dark)">${translated}</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:6px">${getText('translatedBy')}</div>
+    `;
+    this.disabled = false;
+    this.dataset.loading = '0';
+    this.textContent = getText('translateButton');
+    console.log('[Translate]', src, '→', tgt, ':', translated);
+  });
+})();
+
+// ── 3. Voice-first multilingual input ──
+(function() {
+  const btn = document.getElementById('voice-toggle-btn');
+  const transcriptEl = document.getElementById('voice-transcript');
+  const translationEl = document.getElementById('voice-translation');
+  const srcLang = document.getElementById('voice-src-lang');
+  const tgtLang = document.getElementById('voice-tgt-lang');
+  if (!btn || !transcriptEl || !translationEl || !srcLang || !tgtLang) return;
+
+  const speechMap = { English: 'en-US', Hindi: 'hi-IN', Odia: 'or-IN', Kannada: 'kn-IN', Bengali: 'bn-IN', Tamil: 'ta-IN' };
+  const codeMap = { English: 'en', Hindi: 'hi', Odia: 'or', Kannada: 'kn', Bengali: 'bn', Tamil: 'ta' };
+  const mockMap = {
+    'Hindi-English': 'I have chest pain and difficulty breathing.',
+    'English-Hindi': 'मुझे सीने में दर्द है और सांस लेने में तकलीफ है।',
+    'Hindi-Kannada': 'ನನಗೆ ಎದೆ ನೋವು ಇದೆ ಮತ್ತು ಉಸಿರಾಟಕ್ಕೆ ತೊಂದರೆ ಇದೆ.',
+    'Hindi-Tamil': 'எனக்கு மார்பில் வலி உள்ளது மற்றும் சுவாசிக்க சிரமமாக உள்ளது.',
+    'Hindi-Bengali': 'আমার বুকে ব্যথা হচ্ছে এবং শ্বাস নিতে কষ্ট হচ্ছে।',
+    'Hindi-Odia': 'ମୋର ଛାତିରେ ବେଦନା ଓ ଶ୍ୱାସକଷ୍ଟ ଅଛି।',
+  };
+
+  let recognition = null;
+  let listening = false;
+
+  function setVoiceOutput(transcript, translated) {
+    transcriptEl.dataset.value = transcript || '–';
+    translationEl.dataset.value = translated || '–';
+    transcriptEl.textContent = `${getText('transcriptPrefix')}${transcriptEl.dataset.value}`;
+    translationEl.textContent = `${getText('translationPrefix')}${translationEl.dataset.value}`;
+  }
+
+  async function translateVoiceText(text) {
+    const src = srcLang.value;
+    const tgt = tgtLang.value;
+    const key = `${src}-${tgt}`;
+    const sourceCode = codeMap[src] || 'en';
+    const targetCode = codeMap[tgt] || 'en';
+
+    const api = await apiFetch('/voice/process', {
+      method: 'POST',
+      body: JSON.stringify({
+        text,
+        source_language: sourceCode,
+        target_language: targetCode,
+      }),
+    });
+    if (api && api.translated_text) {
+      return api.translated_text;
+    }
+
+    return mockMap[key] || `[${tgt}] ${text}`;
+  }
+
+  async function startFallbackPrompt() {
+    const typed = window.prompt('Type your symptoms to simulate voice input:');
+    if (!typed) return;
+    const translated = await translateVoiceText(typed);
+    setVoiceOutput(typed, translated);
+  }
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SpeechRecognition) {
+    recognition = new SpeechRecognition();
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = async function(event) {
+      const spoken = event.results?.[0]?.[0]?.transcript || '';
+      const translated = await translateVoiceText(spoken || '—');
+      setVoiceOutput(spoken || '—', translated);
+    };
+
+    recognition.onend = function() {
+      listening = false;
+      btn.dataset.recording = '0';
+      btn.textContent = getText('voiceStart');
+    };
+  }
+
+  btn.addEventListener('click', function() {
+    if (!recognition) {
+      startFallbackPrompt();
+      return;
+    }
+
+    if (listening) {
+      recognition.stop();
+      return;
+    }
+
+    recognition.lang = speechMap[srcLang.value] || 'hi-IN';
+    listening = true;
+    btn.dataset.recording = '1';
+    btn.textContent = getText('voiceStop');
+    recognition.start();
+  });
+
+  srcLang.addEventListener('change', function() {
+    if (transcriptEl.dataset.value && transcriptEl.dataset.value !== '–') {
+      translateVoiceText(transcriptEl.dataset.value).then((translated) => {
+        setVoiceOutput(transcriptEl.dataset.value, translated);
+      });
+    }
+  });
+  tgtLang.addEventListener('change', function() {
+    if (transcriptEl.dataset.value && transcriptEl.dataset.value !== '–') {
+      translateVoiceText(transcriptEl.dataset.value).then((translated) => {
+        setVoiceOutput(transcriptEl.dataset.value, translated);
+      });
+    }
+  });
+})();
+
+// ── 3. Choose File handler ──
+(function() {
+  // Create a hidden file input
+  const fileInput = document.createElement('input');
+  fileInput.type = 'file';
+  fileInput.accept = '.jpg,.jpeg,.png,.pdf';
+  fileInput.style.display = 'none';
+  document.body.appendChild(fileInput);
+
+  // Find the "Choose File" button inside the upload zone
+  const uploadZone = document.querySelector('.upload-zone');
+  const chooseBtn = uploadZone ? uploadZone.querySelector('.btn-primary') : null;
+  if (chooseBtn) {
+    chooseBtn.addEventListener('click', function(e) {
+      e.stopPropagation(); // Don't trigger parent upload-zone onclick
+      fileInput.click();
+    });
+  }
+
+  fileInput.addEventListener('change', function() {
+    if (this.files && this.files[0]) {
+      const file = this.files[0];
+      const sizeMB = (file.size / 1024 / 1024).toFixed(1);
+      console.log('[Upload] File selected:', file.name, `(${sizeMB}MB)`);
+
+      // Update upload zone to show selected file
+      if (uploadZone) {
+        const nameDiv = uploadZone.querySelector('div[style*="font-weight:700"]');
+        if (nameDiv) nameDiv.textContent = `📎 ${file.name}`;
+        const metaDiv = uploadZone.querySelector('div[style*="color:var(--text3)"]');
+        if (metaDiv) metaDiv.textContent = `${sizeMB} MB · Ready to digitize`;
+      }
+
+      // Also trigger simulateUpload to show the result
+      simulateUpload();
+    }
+  });
+})();
+
+// ── 4. Digitize with OCR handler ──
+(function() {
+  const docsPage = document.getElementById('page-docs');
+  if (!docsPage) return;
+  // Find the OCR button — it's the btn-primary.btn-blue that's NOT inside the upload-zone
+  const allBlueBtns = docsPage.querySelectorAll('.btn-primary.btn-blue');
+  const ocrBtn = Array.from(allBlueBtns).find(b => b.textContent.includes('Digitize'));
+  if (!ocrBtn) return;
+
+  ocrBtn.addEventListener('click', function() {
+    const workerId = document.getElementById('doc-worker-id').value || 'SW-001';
+    const docType = docsPage.querySelector('select') ? docsPage.querySelectorAll('select')[0]?.value || 'Prescription' : 'Prescription';
+
+    this.disabled = true;
+    this.textContent = '⏳ Processing OCR…';
+
+    // Simulate OCR processing
+    setTimeout(() => {
+      const MOCK_OCR = {
+        'Prescription':      { drug: 'Salbutamol 100mcg', dosage: 'Two puffs · Twice daily · 14 days', doctor: 'Dr. Anitha R.' },
+        'Lab Report':        { drug: 'Hb: 10.2 g/dL, WBC: 7400, ESR: 22', dosage: 'Mild anemia detected', doctor: 'PathLab Bengaluru' },
+        'Discharge Summary': { drug: 'Amoxicillin 500mg + Pantoprazole 40mg', dosage: '7 days course', doctor: 'Dr. Suresh K.' },
+        'X-Ray Report':      { drug: 'Finding: bilateral reticulonodular pattern', dosage: 'Suggestive of early pneumoconiosis', doctor: 'Radiology Dept' },
+      };
+      const ocr = MOCK_OCR[docType] || MOCK_OCR['Prescription'];
+
+      // Show new digitized record in the right column
+      const resultArea = document.getElementById('upload-result');
+      if (resultArea) {
+        resultArea.style.display = 'block';
+        resultArea.innerHTML = `
+          <div style="font-weight:700;color:var(--green-dark);margin-bottom:4px">✅ Document digitized successfully</div>
+          <div style="font-size:12px;color:var(--green-dark)">
+            ${docType}: ${ocr.drug}<br>
+            ${ocr.dosage} · ${ocr.doctor}<br>
+            Worker: ${workerId}
+          </div>
+        `;
+      }
+
+      // Also add a new doc-item row
+      const docsCard = docsPage.querySelector('.card:last-child') || docsPage.querySelector('.card');
+      const newDoc = document.createElement('div');
+      newDoc.className = 'doc-item fade-up';
+      newDoc.innerHTML = `
+        <div class="doc-icon">📋</div>
+        <div style="flex:1">
+          <div class="doc-name">${docType}_${workerId}_${new Date().toISOString().slice(0,10)}.pdf</div>
+          <div class="doc-meta">Extracted: ${ocr.drug} · ${ocr.dosage}</div>
+        </div>
+        <span class="doc-status">Digitized ✓</span>
+      `;
+      const existingResult = docsCard ? docsCard.querySelector('#upload-result') : null;
+      if (existingResult) {
+        docsCard.insertBefore(newDoc, existingResult);
+      }
+
+      this.disabled = false;
+      this.textContent = '⚡ Digitize with OCR';
+      console.log('[OCR]', docType, 'digitized for worker', workerId);
+    }, 1800);
+  });
+})();
+
+// ── 5. ASHA Dashboard portal card → navigate to tracking ──
+(function() {
+  const portalCards = document.querySelectorAll('.portal-grid .portal-card');
+  // Card index 1 = ASHA Dashboard (0=Worker, 1=ASHA, 2=Doctor, 3=Employer)
+  if (portalCards[1] && !portalCards[1].getAttribute('onclick')) {
+    portalCards[1].addEventListener('click', function() {
+      showPage('tracking');
+      console.log('[Nav] ASHA Dashboard → Worker Tracking');
+    });
+  }
+})();
+
+// ── 6. Employer Portal card → scroll to employer section ──
+(function() {
+  const portalCards = document.querySelectorAll('.portal-grid .portal-card');
+  if (portalCards[3] && !portalCards[3].getAttribute('onclick')) {
+    portalCards[3].addEventListener('click', function() {
+      // Scroll to employer section on the dashboard
+      const employerSection = document.querySelector('.two-col-eq');
+      if (employerSection) {
+        employerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Flash the employer card briefly
+        const empCard = employerSection.querySelectorAll('.card')[1];
+        if (empCard) {
+          empCard.style.boxShadow = '0 0 0 3px var(--orange)';
+          setTimeout(() => { empCard.style.boxShadow = ''; }, 2000);
+        }
+      }
+      console.log('[Nav] Employer Portal → Dashboard employer section');
+    });
+  }
+})();
+
+// ── 7. Swasthya AI chatbot ──
+(function() {
+  const openBtn = document.getElementById('swasthya-ai-btn');
+  const panel = document.getElementById('swasthya-ai-window');
+  const closeBtn = document.getElementById('sai-close-btn');
+  const body = document.getElementById('sai-body');
+  const input = document.getElementById('sai-input');
+  const sendBtn = document.getElementById('sai-send-btn');
+  if (!openBtn || !panel || !closeBtn || !body || !input || !sendBtn) return;
+
+  function appendMessage(role, text) {
+    const msg = document.createElement('div');
+    msg.className = `sai-msg ${role}`;
+    msg.textContent = text;
+    body.appendChild(msg);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function getFallbackReply(text) {
+    const q = text.toLowerCase();
+    const hi = currentLang === 'HI';
+    if (q.includes('risk')) return hi ? 'जोखिम विश्लेषण खोलें, वर्कर प्रोफाइल भरें और Analyze Occupational Risk पर क्लिक करें।' : 'Open Risk Analysis, enter worker profile, then click Analyze Occupational Risk.';
+    if (q.includes('voice') || q.includes('audio')) return hi ? 'बाएं पैनल में Voice-first Intake उपयोग करें: source/target भाषा चुनें और Start Voice दबाएं।' : 'Use Voice-first Intake in the left panel: choose source/target language and tap Start Voice.';
+    if (q.includes('qr') || q.includes('scan')) return hi ? 'Scan QR पेज पर जाएं और SW-100001 जैसा Worker ID डालें या स्कैन करें।' : 'Go to Scan QR page, scan or enter Worker ID like SW-100001 to load history.';
+    if (q.includes('document') || q.includes('ocr')) return hi ? 'Upload Documents खोलें और Digitize with OCR दबाकर medicine/diagnosis निकालें।' : 'Open Upload Documents and click Digitize with OCR to extract medicines and diagnosis.';
+    if (q.includes('hindi') || q.includes('language')) return hi ? 'ऊपर दाईं ओर भाषा बटन दबाएं। मुख्य सेक्शनों के लिए हिंदी सपोर्ट सक्रिय है।' : 'Tap Language button in top-right. Hindi translations are enabled for key UI sections.';
+    return hi ? 'मैं Risk, Voice-first translation, QR scan और Document OCR डेमो में मदद कर सकता हूं।' : 'I can help with Risk, Voice-first translation, QR scan, and Document OCR demo flow.';
+  }
+
+  async function send() {
+    const text = input.value.trim();
+    if (!text) return;
+    appendMessage('user', text);
+    input.value = '';
+
+    const chatRes = await apiFetch('/ai/chat', {
+      method: 'POST',
+      body: JSON.stringify({
+        message: text,
+        language: currentLang === 'HI' ? 'hi' : 'en',
+      }),
+    });
+
+    if (chatRes && chatRes.reply) {
+      appendMessage('bot', chatRes.reply);
+      return;
+    }
+    setTimeout(() => appendMessage('bot', getFallbackReply(text)), 350);
+  }
+
+  openBtn.addEventListener('click', () => panel.classList.toggle('open'));
+  closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+  sendBtn.addEventListener('click', send);
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') send();
+  });
+})();
+
+// ── Logout handler ──
+document.querySelector('.logout-btn').addEventListener('click', () => {
+  authToken = null;
+  localStorage.removeItem('ss_token');
+  console.log('[Auth] Logged out');
+  alert(currentLang === 'HI' ? 'लॉगआउट हो गया। दोबारा लॉगिन के लिए पेज रीफ्रेश करें।' : 'Logged out. Refresh to re-login.');
+});
+
+// ── Generate QR Code Form ──
+window.generateQR = function() {
+  const inputId = document.getElementById('scan-id').value.trim();
+  const workerId = inputId || 'SW-100001';
+  const qrResult = document.getElementById('qr-result');
+  document.getElementById('scan-id').value = workerId; // guarantee consistent UI
+  
+  qrResult.style.display = 'block';
+  qrResult.innerHTML = `
+    <div style="font-weight:700; margin-bottom:12px; font-size:15px">Worker QR Code</div>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=swasthyasetu://worker/${workerId}&margin=0" 
+         style="border-radius:10px; border:4px solid var(--border); padding:8px; background:white; width:150px; height:150px" alt="QR Code">
+    <div style="margin-top:12px; font-size:14px; font-family:monospace; background:#f0f0f0; padding:6px; border-radius:4px; font-weight:700">ID: ${workerId}</div>
+    <div style="margin-top:8px; font-size:11px; color:var(--text3)">Workers can present this code at empaneled hospitals</div>
+  `;
+  console.log('[QR Generator] Generated code for', workerId);
+};
+
+// ── Boot ──
+applyLanguage(currentLang);
+autoLogin();
+console.log('[SwasthyaSetu] Backend integration loaded. API:', API_BASE);
+console.log('[SwasthyaSetu] Mock mode:', mockOn ? 'ON (client-side)' : 'OFF (real API calls)');
+console.log('[SwasthyaSetu] Try worker IDs: SW-100001 (Ramesh), SW-100002 (Suresh), SW-100003 (Meena)');
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+export { default as ArchitecturePage } from "./ArchitecturePage";
+export { default as AshaDashboard } from "./AshaDashboard";
+export { default as DashboardPage } from "./DashboardPage";
+export { default as DoctorPortal } from "./DoctorPortal";
+export { default as EmployerPortal } from "./EmployerPortal";
+export { default as LoginRegisterPage } from "./LoginRegisterPage";
+export { default as MigrantJourneyFlow } from "./MigrantJourneyFlow";
+export { default as MobileAppHome } from "./MobileAppHome";
+export { default as RiskAssessmentPage } from "./RiskAssessmentPage";
+export { default as ScanQrPage } from "./ScanQrPage";
+export { default as TechStackSlide } from "./TechStackSlide";
+export { default as UploadDocumentsPage } from "./UploadDocumentsPage";
+export { default as VoiceDemoPage } from "./VoiceDemoPage";
+export { default as WorkerRecordPage } from "./WorkerRecordPage";
+export { default as WorkerTrackingPage } from "./WorkerTrackingPage";

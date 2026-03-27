@@ -1,0 +1,362 @@
+/* ── Employer Analytics Dashboard ── */
+
+:root {
+  --emp-orange: #E5681A;
+  --emp-orange-dark: #c45a16;
+  --emp-orange-light: #fef3eb;
+  --emp-green: #059669;
+  --emp-green-light: #ecfdf5;
+  --emp-yellow: #F59E0B;
+  --emp-yellow-light: #fffbeb;
+  --emp-red: #DC2626;
+  --emp-red-light: #fef2f2;
+  --emp-gray-50: #f8fafc;
+  --emp-gray-100: #f1f5f9;
+  --emp-gray-200: #e2e8f0;
+  --emp-gray-400: #94a3b8;
+  --emp-gray-500: #64748b;
+  --emp-gray-700: #334155;
+  --emp-gray-900: #0f172a;
+}
+
+/* ─ Shell ─ */
+
+.emp-shell {
+  min-height: 100vh;
+  background: var(--emp-gray-50);
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ─ Top Bar ─ */
+
+.emp-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  background: #fff;
+  border-bottom: 1px solid var(--emp-gray-200);
+}
+
+.emp-topbar__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.emp-topbar__logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--emp-orange);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emp-topbar__title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--emp-gray-900);
+}
+
+.emp-topbar__subtitle {
+  font-size: 0.75rem;
+  color: var(--emp-gray-500);
+}
+
+.emp-topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.emp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.emp-btn--primary {
+  background: var(--emp-orange);
+  color: #fff;
+}
+
+.emp-btn--primary:hover {
+  background: var(--emp-orange-dark);
+}
+
+.emp-btn--outline {
+  background: #fff;
+  color: var(--emp-gray-700);
+  border: 1px solid var(--emp-gray-200);
+}
+
+.emp-btn--outline:hover {
+  background: var(--emp-gray-100);
+}
+
+/* ─ Content ─ */
+
+.emp-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 32px;
+}
+
+/* ─ Hero Metric ─ */
+
+.emp-hero {
+  background: var(--emp-orange);
+  border-radius: 16px;
+  padding: 28px 32px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.emp-hero__value {
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.emp-hero__label {
+  font-size: 1rem;
+  font-weight: 500;
+  opacity: 0.9;
+  margin-top: 4px;
+}
+
+.emp-hero__icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─ Grid ─ */
+
+.emp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.emp-card {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid var(--emp-gray-200);
+  overflow: hidden;
+}
+
+.emp-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--emp-gray-100);
+}
+
+.emp-card__title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--emp-gray-900);
+}
+
+.emp-card__badge {
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-weight: 600;
+}
+
+.emp-card__badge--green {
+  background: var(--emp-green-light);
+  color: var(--emp-green);
+}
+
+.emp-card__body {
+  padding: 20px;
+}
+
+/* ─ Chart Container ─ */
+
+.emp-chart-wrap {
+  height: 200px;
+  position: relative;
+}
+
+/* ─ Gauge Section ─ */
+
+.emp-gauge-section {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.emp-gauge-wrap {
+  width: 160px;
+  height: 160px;
+  flex-shrink: 0;
+}
+
+.emp-gauge-info {
+  flex: 1;
+}
+
+.emp-gauge-info__value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--emp-green);
+}
+
+.emp-gauge-info__label {
+  font-size: 0.85rem;
+  color: var(--emp-gray-500);
+  margin-top: 2px;
+}
+
+.emp-gauge-info__items {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.emp-gauge-info__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--emp-gray-700);
+}
+
+.emp-gauge-info__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ─ Risk List ─ */
+
+.emp-risk-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.emp-risk-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: var(--emp-gray-50);
+  border: 1px solid var(--emp-gray-200);
+}
+
+.emp-risk-rank {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.emp-risk-rank--1 { background: var(--emp-red-light); color: var(--emp-red); }
+.emp-risk-rank--2 { background: var(--emp-yellow-light); color: var(--emp-yellow); }
+.emp-risk-rank--3 { background: var(--emp-orange-light); color: var(--emp-orange); }
+
+.emp-risk-info {
+  flex: 1;
+}
+
+.emp-risk-name {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--emp-gray-900);
+}
+
+.emp-risk-detail {
+  font-size: 0.75rem;
+  color: var(--emp-gray-500);
+  margin-top: 2px;
+}
+
+.emp-risk-score {
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+.emp-risk-score--high   { color: var(--emp-red); }
+.emp-risk-score--medium { color: var(--emp-yellow); }
+.emp-risk-score--low    { color: var(--emp-orange); }
+
+/* ─ Print ─ */
+
+.emp-print-area {
+  display: none;
+}
+
+@media print {
+  .emp-topbar,
+  .emp-topbar__actions {
+    display: none !important;
+  }
+
+  .emp-print-area {
+    display: block;
+    padding: 20px;
+    font-size: 12pt;
+  }
+
+  .emp-shell {
+    background: #fff;
+  }
+
+  .emp-hero {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .emp-card {
+    break-inside: avoid;
+  }
+}
+
+/* ─ Responsive ─ */
+
+@media (max-width: 768px) {
+  .emp-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .emp-hero__value {
+    font-size: 2rem;
+  }
+
+  .emp-gauge-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
