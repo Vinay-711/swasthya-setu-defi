@@ -979,12 +979,15 @@ let authToken = localStorage.getItem('ss_token') || null;
 
 // ── API Helper ──
 async function apiFetch(path, opts = {}) {
-  const mockSuffix = mockOn ? '?mock=true' : '';
+  const { forceLive = false, forceMock = false, ...fetchOpts } = opts;
+  const useMock = forceMock ? true : (forceLive ? false : mockOn);
+  const joiner = path.includes('?') ? '&' : '?';
+  const mockSuffix = useMock ? `${joiner}mock=true` : '';
   const url = `${API_BASE}${path}${mockSuffix}`;
-  const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
+  const headers = { 'Content-Type': 'application/json', ...(fetchOpts.headers || {}) };
   if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
   try {
-    const res = await fetch(url, { ...opts, headers });
+    const res = await fetch(url, { ...fetchOpts, headers });
     if (!res.ok) throw new Error(`API ${res.status}: ${await res.text()}`);
     if (res.status === 204) return null;
     return await res.json();
@@ -1591,7 +1594,10 @@ document.querySelector('.lang-btn').addEventListener('click', function() {
   const chooseBtn = uploadZone ? uploadZone.querySelector('.btn-primary') : null;
   if (chooseBtn) {
     chooseBtn.addEventListener('click', function(e) {
+      e.preventDefault();
       e.stopPropagation(); // Don't trigger parent upload-zone onclick
+      // Allow selecting the same file repeatedly by resetting prior value.
+      fileInput.value = '';
       fileInput.click();
     });
   }
@@ -1734,6 +1740,12 @@ document.querySelector('.lang-btn').addEventListener('click', function() {
   function getFallbackReply(text) {
     const q = text.toLowerCase();
     const hi = currentLang === 'HI';
+    if (q.includes('silicosis') || q.includes('सिलिकोसिस')) return hi
+      ? 'सिलिकोसिस फेफड़ों की बीमारी है जो सिलिका धूल लंबे समय तक सांस से अंदर जाने पर होती है। बचाव के लिए N95/PPE, धूल नियंत्रण और नियमित X-ray व spirometry कराएं।'
+      : 'Silicosis is a lung disease caused by long-term inhalation of silica dust. Prevent it with N95/PPE, dust control, and regular chest X-ray plus spirometry screening.';
+    if (q.includes('byssinosis') || q.includes('बायसिनोसिस')) return hi
+      ? 'बायसिनोसिस कपास/टेक्सटाइल धूल से होने वाली फेफड़ों की बीमारी है। कपास धूल कम करें, मास्क पहनें और सांस की जांच कराएं।'
+      : 'Byssinosis is a lung condition linked to cotton/textile dust exposure. Reduce dust, use masks, and get pulmonary function testing.';
     if (q.includes('risk')) return hi ? 'जोखिम विश्लेषण खोलें, वर्कर प्रोफाइल भरें और Analyze Occupational Risk पर क्लिक करें।' : 'Open Risk Analysis, enter worker profile, then click Analyze Occupational Risk.';
     if (q.includes('voice') || q.includes('audio')) return hi ? 'बाएं पैनल में Voice-first Intake उपयोग करें: source/target भाषा चुनें और Start Voice दबाएं।' : 'Use Voice-first Intake in the left panel: choose source/target language and tap Start Voice.';
     if (q.includes('qr') || q.includes('scan')) return hi ? 'Scan QR पेज पर जाएं और SW-100001 जैसा Worker ID डालें या स्कैन करें।' : 'Go to Scan QR page, scan or enter Worker ID like SW-100001 to load history.';
@@ -1750,6 +1762,8 @@ document.querySelector('.lang-btn').addEventListener('click', function() {
 
     const chatRes = await apiFetch('/ai/chat', {
       method: 'POST',
+      // Always hit live AI endpoint so Gemini can answer even when UI mock mode is ON.
+      forceLive: true,
       body: JSON.stringify({
         message: text,
         language: currentLang === 'HI' ? 'hi' : 'en',
@@ -1765,9 +1779,17 @@ document.querySelector('.lang-btn').addEventListener('click', function() {
 
   openBtn.addEventListener('click', () => panel.classList.toggle('open'));
   closeBtn.addEventListener('click', () => panel.classList.remove('open'));
-  sendBtn.addEventListener('click', send);
+  sendBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    send();
+  });
   input.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') send();
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      event.stopPropagation();
+      send();
+    }
   });
 })();
 

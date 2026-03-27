@@ -36,6 +36,9 @@ class Settings(BaseSettings):
 
     gemini_api_key: str = ""
     gemini_model: str = "gemini-1.5-flash"
+    gemini_free_tier_only: bool = True
+    gemini_free_tier_model: str = "gemini-2.5-flash-lite"
+    gemini_daily_request_cap: int = 250
     allow_start_without_db: bool = True
 
     model_config = SettingsConfigDict(
