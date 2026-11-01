@@ -587,3 +587,14 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fo
 This repository contains a healthcare workflow prototype; the large-scale beneficiary figures above describe the intended audience, not measured usage or deployed impact. AI outputs and mock data must remain distinguishable from real patient information. ABHA, provider delivery and cloud integrations require independent configuration and verification.
 
 For operational details, begin with [deployment notes](infrastructure/deployment/README.md), [backend tests](backend/tests) and the root [Docker Compose configuration](docker-compose.yml). Compose publishes local development services; default demonstration credentials must not be reused for an Internet-facing deployment. Do not run destructive database-reset scripts against a shared database.
+
+### OTP privacy regression checks
+
+Run `python -m unittest discover -s tests_isolated -p test_otp_privacy.py`.
+The isolated suite mocks Redis and configuration and sends no SMS or network calls.
+Codes use Python `secrets`, and neither phone numbers nor codes are printed by the
+OTP service. The send-OTP response includes `DEBUG_OTP` only when `ENVIRONMENT` is
+exactly `development` or `test`; configure `ENVIRONMENT=production` in deployment.
+SMS dispatch remains a stub: hiding debug codes does not implement delivery.
+Production authentication also needs a real delivery provider, rate limiting, and
+atomic single-use verification; these checks are not a production-readiness claim.
