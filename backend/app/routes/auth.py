@@ -6,7 +6,7 @@ from app.core.security import create_access_token
 from app.models.user import User, UserRole
 from app.schemas.auth import LoginRequest, RegisterRequest, SendOTPRequest, VerifyOTPRequest, TokenResponse, UserPublic
 from app.services.user_service import authenticate_user, create_user, get_user_by_email, get_user_by_phone
-from app.services.otp_service import otp_service
+from app.services.otp_service import otp_service, build_otp_response
 from database.session import get_db
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -20,7 +20,7 @@ async def send_otp(payload: SendOTPRequest, db: AsyncSession = Depends(get_db)) 
         
     otp = await otp_service.create_otp(payload.phone)
     # The actual SMS dispatch would happen in otp_service.create_otp
-    return {"message": "OTP sent successfully", "DEBUG_OTP": otp}
+    return build_otp_response(otp)
 
 
 @router.post("/verify-otp", response_model=TokenResponse)

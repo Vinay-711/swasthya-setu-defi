@@ -1,7 +1,15 @@
-import random
+import secrets
 import string
 import redis.asyncio as redis
 from app.core.config import settings
+
+def build_otp_response(otp: str) -> dict:
+    """Keep demo codes out of responses outside explicit local/test environments."""
+    response = {"message": "OTP sent successfully"}
+    if settings.environment in {"development", "test"}:
+        response["DEBUG_OTP"] = otp
+    return response
+
 
 # Global redis connection
 redis_client = redis.from_url(settings.redis_url, decode_responses=True)
@@ -12,7 +20,7 @@ class OTPService:
 
     def _generate_otp(self, length: int = 6) -> str:
         """Generate a numeric OTP."""
-        return "".join(random.choices(string.digits, k=length))
+        return "".join(secrets.choice(string.digits) for _ in range(length))
 
     async def create_otp(self, phone: str) -> str:
         """Generates and stores an OTP for the phone number."""
@@ -20,8 +28,7 @@ class OTPService:
         key = f"otp:{phone}"
         await redis_client.set(key, otp, ex=self.ttl)
         # In a real system, you would integrate Twilio / MSG91 here
-        # to send the SMS. For Phase 2, we just return/print it.
-        print(f"DEBUG - Generated OTP for {phone}: {otp}")
+        # to send the SMS. This prototype returns it to the caller without logging it.
         return otp
 
     async def verify_otp(self, phone: str, otp: str) -> bool:
