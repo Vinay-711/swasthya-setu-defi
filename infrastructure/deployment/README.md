@@ -40,3 +40,7 @@ alembic upgrade head
 - Replace mock notification channels with provider integrations.
 - Mount persistent storage for `backend/storage`.
 - Use HTTPS reverse proxy (Nginx/Traefik).
+
+## Before starting services
+
+The root [docker-compose.yml](../../docker-compose.yml) and [environment template](../../.env.example) are the entry points for a local stack. Check which Compose file matches the services you intend to start; the gateway configuration is a separate arrangement. Keep services local, change development defaults for any shared environment and use synthetic records. A frontend mock-mode response is not a successful live provider transaction.

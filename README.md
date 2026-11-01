@@ -581,3 +581,9 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fo
 [![Twitter Follow](https://img.shields.io/twitter/follow/SwasthyaSetu?style=social)](https://twitter.com/SwasthyaSetu)
 
 </div>
+
+## Current implementation versus project vision
+
+This repository contains a healthcare workflow prototype; the large-scale beneficiary figures above describe the intended audience, not measured usage or deployed impact. AI outputs and mock data must remain distinguishable from real patient information. ABHA, provider delivery and cloud integrations require independent configuration and verification.
+
+For operational details, begin with [deployment notes](infrastructure/deployment/README.md), [backend tests](backend/tests) and the root [Docker Compose configuration](docker-compose.yml). Compose publishes local development services; default demonstration credentials must not be reused for an Internet-facing deployment. Do not run destructive database-reset scripts against a shared database.
