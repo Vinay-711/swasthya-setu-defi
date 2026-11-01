@@ -15,13 +15,13 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://postgresql.org)
 [![MongoDB](https://img.shields.io/badge/MongoDB-7.0-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com)
 [![AWS](https://img.shields.io/badge/AWS-Cloud-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)](https://aws.amazon.com)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen?style=for-the-badge)](CONTRIBUTING.md)
+
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen?style=for-the-badge)](#-contributing)
 [![Hackathon](https://img.shields.io/badge/Built%20For-Hackathon-purple?style=for-the-badge)]()
 
 ---
 
-[📋 PRD](docs/PRD.md) · [🛠️ Setup](#-installation) · [🎯 Features](#-core-features) · [🏗️ Architecture](#-system-architecture) · [🤝 Contribute](#-contributing)
+[📋 PRD](SwasthyaSetu_PRD.md) · [🛠️ Setup](#-installation) · [🎯 Features](#-core-features) · [🏗️ Architecture](#-system-architecture) · [🤝 Contribute](#-contributing)
 
 </div>
 
@@ -216,60 +216,45 @@ We give every migrant worker:
 ### Quick Start
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/your-org/swasthyasetu.git
-cd swasthyasetu
-
-# 2. Set up environment variables
+git clone https://github.com/Vinay-711/swasthya-setu-defi.git
+cd swasthya-setu-defi
 cp .env.example .env
-# Edit .env with your credentials (ABHA, Twilio, AWS, DB URLs)
+# Configure the local database URLs and application secrets in .env.
 
-# 3. Install system dependencies (Ubuntu/Debian)
-sudo apt-get update && sudo apt-get install -y \
-  tesseract-ocr \
-  tesseract-ocr-hin \
-  tesseract-ocr-ben \
-  tesseract-ocr-tam \
-  libgl1-mesa-glx \
-  ffmpeg
+# Backend (Python 3.11 matches the checked-in Dockerfile)
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r backend/requirements.txt
+cd backend
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+```
 
-# 4. Create and activate virtual environment
-python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+Start the frontend in a separate terminal from the repository root:
 
-# 5. Install Python dependencies
-pip install -r requirements.txt
-
-# 6. Download AI models
-python -m spacy download en_core_web_sm
-python scripts/download_models.py   # Downloads Whisper + IndicBERT
-
-# 7. Initialize databases
-alembic upgrade head              # PostgreSQL migrations
-python scripts/seed_mongodb.py    # MongoDB initial collections
-
-# 8. Start all services with Docker Compose
-docker-compose up -d
-
-# 9. Start the backend API
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-
-# 10. Start the frontend (separate terminal)
+```bash
 cd frontend
-npm install
+npm ci
 npm run dev
 ```
+
+The backend requires its configured PostgreSQL, MongoDB and Redis services. Use
+the Compose option below for a local stack. Optional migrations live under
+`backend/` (`cd backend && alembic upgrade head`). This checkout does not include
+`scripts/download_models.py` or `scripts/seed_mongodb.py`; the old commands referring
+to them have been removed. These instructions follow the checked-in entry points;
+a complete local deployment has not been validated by the isolated OTP tests.
 
 ### Docker Compose (Recommended)
 
 ```bash
-# One-command startup (backend + databases + Redis + Celery)
-docker-compose up --build
+# From the repository root; review .env first.
+# Backend, frontend, databases, Redis and pgAdmin
+docker compose up --build
 
 # API available at:  http://localhost:8000
 # API Docs at:       http://localhost:8000/docs
 # Frontend at:       http://localhost:3000
-# Flower (tasks):    http://localhost:5555
+# pgAdmin:           http://localhost:5050
 ```
 
 ### Environment Variables
@@ -539,7 +524,7 @@ git checkout -b feature/add-pneumoconiosis-model
 git push origin feature/add-pneumoconiosis-model
 ```
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+For a contribution, include a reproducible example, focused tests, and any setup changes in the PR. Use synthetic data in examples and communicate respectfully. Separate contribution and conduct documents are not included in this checkout.
 
 ---
 
@@ -557,7 +542,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_
 
 ## 📄 License
 
-This project is licensed under the **MIT License** — see [LICENSE](LICENSE) for details.
+A standalone license file is not present in this repository. The earlier MIT reference did not provide license terms; clarify and add the intended license before redistributing the project.
 
 ---
 
@@ -577,7 +562,7 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fo
 
 *"स्वास्थ्य सबका अधिकार है।" — Health is everyone's right.*
 
-[![GitHub stars](https://img.shields.io/github/stars/your-org/swasthyasetu?style=social)](https://github.com/your-org/swasthyasetu)
+[![GitHub stars](https://img.shields.io/github/stars/Vinay-711/swasthya-setu-defi?style=social)](https://github.com/Vinay-711/swasthya-setu-defi)
 [![Twitter Follow](https://img.shields.io/twitter/follow/SwasthyaSetu?style=social)](https://twitter.com/SwasthyaSetu)
 
 </div>
